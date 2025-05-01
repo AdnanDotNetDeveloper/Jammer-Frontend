@@ -1,0 +1,73 @@
+@model dynamic
+
+<div class="product-card group">
+    <div class="product-image">
+        <a href="/Home/Product?id=@Model.Id">
+            <img src="@Model.Images[0]" alt="@Model.Name" class="transition-transform duration-500 group-hover:scale-105">
+        </a>
+        
+        <!-- Quick actions -->
+        <div class="absolute top-3 right-3 flex flex-col gap-2 opacity-0 transform translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+            <button type="button" onclick="addToWishlist(@Model.Id)" class="bg-white rounded-full w-9 h-9 flex items-center justify-center shadow-soft hover:bg-primary hover:text-white transition-colors">
+                <i class="bi bi-heart text-lg"></i>
+            </button>
+            <button type="button" onclick="quickView(@Model.Id)" class="bg-white rounded-full w-9 h-9 flex items-center justify-center shadow-soft hover:bg-primary hover:text-white transition-colors">
+                <i class="bi bi-eye text-lg"></i>
+            </button>
+        </div>
+        
+        <!-- Sale badge -->
+        @if (Model.Discount > 0)
+        {
+            <div class="absolute top-3 left-3">
+                <span class="badge badge-danger">-@Model.Discount%</span>
+            </div>
+        }
+    </div>
+    
+    <div class="product-info p-4">
+        <!-- Category -->
+        <div class="text-xs text-secondary-500 mb-1">@Model.Category</div>
+        
+        <!-- Title -->
+        <a href="/Home/Product?id=@Model.Id" class="product-title block mb-2">@Model.Name</a>
+        
+        <!-- Price -->
+        <div class="flex items-center gap-2">
+            @if (Model.Discount > 0)
+            {
+                <span class="product-price">$@(Model.Price - (Model.Price * Model.Discount / 100))</span>
+                <span class="text-secondary-400 line-through text-sm">$@Model.Price</span>
+            }
+            else
+            {
+                <span class="product-price">$@Model.Price</span>
+            }
+        </div>
+        
+        <!-- Rating -->
+        <div class="flex items-center gap-1 mt-2">
+            @for (int i = 0; i < 5; i++)
+            {
+                if (i < Math.Floor(Model.Rating))
+                {
+                    <i class="bi bi-star-fill text-warning-500 text-sm"></i>
+                }
+                else if (i < Model.Rating)
+                {
+                    <i class="bi bi-star-half text-warning-500 text-sm"></i>
+                }
+                else
+                {
+                    <i class="bi bi-star text-warning-500 text-sm"></i>
+                }
+            }
+            <span class="text-xs text-secondary-500 ml-1">(@Model.ReviewCount)</span>
+        </div>
+        
+        <!-- Add to cart button -->
+        <button type="button" onclick="addToCart(@Model.Id)" class="w-full mt-3 btn btn-primary py-2">
+            Add to Cart
+        </button>
+    </div>
+</div> 

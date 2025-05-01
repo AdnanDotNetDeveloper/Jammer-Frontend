@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Register";
+    Layout = "_Layout-Signup-Login";
+}
+
+<div class="card max-w-3xl w-full mx-auto overflow-hidden animate-fade-in">
+    <div class="p-8">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-secondary-900 mb-2">Create Account</h1>
+            <p class="text-secondary-500">Join us and enjoy a personalized shopping experience</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Registration Form -->
+            <div class="md:border-r border-secondary-100 md:pr-8">
+                <h2 class="text-xl font-bold text-secondary-900 mb-4">Register</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="fullname" class="form-label">Full Name</label>
+                        <input id="fullname" type="text" class="form-input" placeholder="Your full name" required>
+                    </div>
+                    <div>
+                        <label for="email" class="form-label">Email Address</label>
+                        <input id="email" type="email" class="form-input" placeholder="Your email" required>
+                    </div>
+                    <div>
+                        <label for="number" class="form-label">Phone Number</label>
+                        <input id="number" type="tel" class="form-input" placeholder="Your phone number" required>
+                    </div>
+                    <div>
+                        <label for="password" class="form-label">Password</label>
+                        <input id="password" type="password" class="form-input" placeholder="Create a password" required>
+                    </div>
+                    <div>
+                        <label for="password-confirm" class="form-label">Confirm Password</label>
+                        <input id="password-confirm" type="password" class="form-input" placeholder="Confirm your password" required>
+                    </div>
+                    <div>
+                        <label for="image" class="form-label">Profile Image</label>
+                        <input id="image" type="file" class="form-input" accept="image/*">
+                    </div>
+                    <div class="flex items-center mt-4">
+                        <input type="checkbox" id="terms" class="h-4 w-4 rounded border-secondary-300 text-primary focus:ring-primary">
+                        <label for="terms" class="ml-2 text-sm text-secondary-700">
+                            I agree to the 
+                            <a href="#" class="text-primary hover:underline">Terms of Service</a>
+                        </label>
+                    </div>
+                    <button id="signup-btn" class="btn btn-primary w-full">Create Account</button>
+                </div>
+            </div>
+            
+            <!-- Login CTA -->
+            <div class="flex flex-col justify-center">
+                <h2 class="text-xl font-bold text-secondary-900 mb-4">Already have an account?</h2>
+                <p class="text-secondary-500 mb-6">Sign in to access your saved items, orders, and preferences.</p>
+                <a href="/Home/Login" class="btn btn-outline">Sign In</a>
+                
+                <div class="mt-8">
+                    <div class="text-sm text-secondary-500 mb-4">By creating an account, you agree to our:</div>
+                    <ul class="space-y-2 text-sm text-secondary-700">
+                        <li class="flex items-center">
+                            <i class="bi bi-check-circle text-success mr-2"></i>
+                            <span>Privacy Policy</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="bi bi-check-circle text-success mr-2"></i>
+                            <span>Terms of Service</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="bi bi-check-circle text-success mr-2"></i>
+                            <span>Communication Preferences</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script src="/js/signup.js"></script>

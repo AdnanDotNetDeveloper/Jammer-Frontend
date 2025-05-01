@@ -1,0 +1,225 @@
+﻿
+@{
+    ViewData["Ttile"] = "Checkot Page";
+}
+<div class="breadcrumb-block style-shared">
+    <div class="breadcrumb-main bg-linear overflow-hidden">
+        <div class="container lg:pt-[134px] pt-24 pb-10 relative">
+            <div class="main-content w-full h-full flex flex-col items-center justify-center relative z-[1]">
+                <div class="text-content">
+                    <div class="heading2 text-center">Checkout</div>
+                    <div class="link flex items-center justify-center gap-1 caption1 mt-3">
+                        <a href="index.html">Homepage</a>
+                        <i class="ph ph-caret-right text-sm text-secondary2"></i>
+                        <div class="text-secondary2 capitalize">Checkout</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ </div>
+
+<div class="checkout-block md:py-20 py-10">
+    <div class="container">
+        <div class="content-main flex max-lg:flex-col-reverse gap-y-10 justify-between">
+            <div class="left lg:w-1/2">
+                <div class="login bg-surface py-3 px-4 flex justify-between rounded-lg">
+                    <div class="left flex items-center"><a href="" id="signup"><span class="text-on-surface-variant1 pr-4">Already have an account? </span></a><a href="" id="login"><span class="text-button text-on-surface hover-underline cursor-pointer hover:underline">Login</span></a></div>
+                    <div class="right"><i class="ph ph-caret-down fs-20 cursor-pointer"></i></div>
+                </div>
+                <div class="form-login-block mt-3">
+                    <p id="login-message"></p>
+                    <div id="login-con" class="p-5 border border-line rounded-lg">
+                        <div class="grid sm:grid-cols-2 gap-5">
+                            <div class="email">
+                                <input class="border-line px-4 pt-3 pb-3 w-full rounded-lg" id="username" type="email" placeholder="Username or email" required />
+                            </div>
+                            <div class="pass">
+                                <input class="border-line px-4 pt-3 pb-3 w-full rounded-lg" id="password" type="password" placeholder="Password" required />
+                            </div>
+                        </div>
+                        <div class="block-button mt-3">
+                            <button class="button-main button-blue-hover" id="login-btn">Login</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="information mt-5">
+                    <div class="heading5">Information</div>
+                    <div class="form-checkout mt-5">
+                        <div>
+                            <div class="grid sm:grid-cols-2 gap-4 gap-y-5 flex-wrap">
+                                <div class="">
+                                    <input class="border-line px-4 py-3 w-full rounded-lg" id="city" type="text" placeholder="Town/City *" required />
+                                </div>
+                                <div class="">
+                                    <input class="border-line px-4 py-3 w-full rounded-lg" id="street" type="text" placeholder="Street,..." required />
+                                </div>
+                                <div class="select-block relative">
+                                    <select class="border border-line px-4 py-3 w-full rounded-lg" id="region" name="country">
+                                        <option value="Pakistan" selected>Pakistan</option>
+                                    </select>
+                                    <i class="ph ph-caret-down absolute right-3 top-4"></i>
+                                </div>
+                                <div class="">
+                                    <input class="border-line px-4 py-3 w-full rounded-lg" id="postalCode" type="text" placeholder="Postal Code *" required />
+                                </div>
+                            </div>
+                            <button id="AddressBtn" class="mt-4 button-main text-xs rounded">Addresses</button>
+                            <button id="saveAddressBtn" class="mt-4 button-main text-xs rounded">Save Address</button>
+
+                            <div id="addressModal" class="hidden fixed  z-1000 inset-0 bg-gray  flex items-center justify-center">
+                                <div class="bg-white p-6 rounded-lg w-1/2">
+                                    <h3 class="text-xl mb-4">Saved Addresses</h3>
+                                    <div id="addressList" class="space-y-4"></div>
+                                    <button id="closeModal" class="mt-4 button-main text-xs rounded">Close</button>
+                                </div>
+                            </div> 
+                            <div class="payment-block md:mt-10 mt-6">
+                                <div class="heading5">Choose payment Option:</div>
+                                <div class="list-payment mt-5">
+                                    <div class="type bg-surface p-5 border border-line rounded-lg">
+                                        <input class="cursor-pointer" type="radio" id="credit" name="payment" />
+                                        <label class="text-button pl-2 cursor-pointer" for="credit">Credit Card</label>
+                                        <div class="infor">
+                                            <div class="text-on-surface-variant1 pt-4">Make your payment directly into our bank account. Your order will not be shipped until the funds have cleared in our account.</div>
+                                            <div class="row">
+                                                <div class="col-12 mt-3">
+                                                    <label for="cardNumberCredit">Card Numbers</label>
+                                                    <input class="cursor-pointer border-line px-4 py-3 w-full rounded mt-2" type="text" id="cardNumberCredit" placeholder="ex.1234567290" />
+                                                </div>
+                                                <div class="mt-3">
+                                                    <label for="dateCredit">Date</label>
+                                                    <input class="border-line px-4 py-3 w-full rounded mt-2" type="date" id="dateCredit" name="date" />
+                                                </div>
+                                                <div class="mt-3">
+                                                    <label for="ccvCredit">CCV</label>
+                                                    <input class="cursor-pointer border-line px-4 py-3 w-full rounded mt-2" type="text" id="ccvCredit" placeholder="****" />
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2 mt-3">
+                                                <input type="checkbox" id="saveCredit" name="save" />
+                                                <label class="text-button" for="saveCredit">Save Card Details</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="type bg-surface p-5 border border-line rounded-lg mt-5">
+                                        <input class="cursor-pointer" type="radio" id="delivery" name="payment" />
+                                        <label class="text-button pl-2 cursor-pointer" for="delivery">Cash on delivery</label>
+                                        <div class="infor">
+                                            <div class="text-on-surface-variant1 pt-4">Make your payment directly into our bank account. Your order will not be shipped until the funds have cleared in our account.</div>
+                                            <div class="row">
+                                                <div class="col-12 mt-3">
+                                                    <label for="cardNumberDelivery">Card Numbers</label>
+                                                    <input class="cursor-pointer border-line px-4 py-3 w-full rounded mt-2" type="text" id="cardNumberDelivery" placeholder="ex.1234567290" />
+                                                </div>
+                                                <div class="mt-3">
+                                                    <label for="dateDelivery">Date</label>
+                                                    <input class="border-line px-4 py-3 w-full rounded mt-2" type="date" id="dateDelivery" name="date" />
+                                                </div>
+                                                <div class="mt-3">
+                                                    <label for="ccvDelivery">CCV</label>
+                                                    <input class="cursor-pointer border-line px-4 py-3 w-full rounded mt-2" type="text" id="ccvDelivery" placeholder="****" />
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2 mt-3">
+                                                <input type="checkbox" id="saveDelivery" name="save" />
+                                                <label class="text-button" for="saveDelivery">Save Card Details</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Popup message container -->
+                            <div id="popupContainer" class="hidden fixed z-1000 inset-0 flex items-center justify-center bg-gray-800 ">
+                                <div id="popupMessage" class="bg-white p-6 rounded shadow-lg">
+                                    <p id="popupText" class="text-center text-lg font-semibold"></p>
+                                    <button id="closePopup" class= " button-main w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="block-button md:mt-10 mt-6">
+                                <button id="orderForm" class="button-main w-full">Payment</button>
+                            </div>
+                            <div id="popupContainer" class="hidden fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50">
+                                <div class="bg-white p-6 rounded-lg w-full max-w-md">
+                                    <h3 class="text-xl font-bold mb-4">Saved Addresses</h3>
+                                    <div id="addressList" class="mb-4 space-y-2"></div>
+                                    <button id="closePopup" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Close</button>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-4 mt-6">
+                                <button id="saveAddress" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Save Address</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right justify-start flex-shrink-0 lg:w-[47%] bg-surface lg:py-20 py-12">
+                <div class="lg:sticky lg:top-24 h-fit lg:max-w-[606px] w-full flex-shrink-0 lg:pl-[80px] pr-[16px] max-lg:pl-[16px] flex flex-col justify-between gap-12">
+                    <div class="list-product-main list_prd flex flex-col gap-7 " style="height:100%; max-height:404px;overflow:auto">
+                        <div class="item flex items-center justify-between gap-6">
+                            <div class="flex items-center gap-6">
+                                <div class="bg_img relative flex-shrink-0 w-[100px] h-[100px]">
+                                    <img src="./assets/images/product/1000x1000.png" alt="product/1000x1000" class="w-full h-full object-cover rounded-lg">
+                                    <span class="quantity flex items-center justify-center absolute -top-3 -right-3 w-7 h-7 rounded-full bg-black text-white">1</span>
+                                </div>
+                                <div>
+                                    <strong class="name text-title">Contrasting sheepskin sweatshirt</strong>
+                                    <div class="flex items-center gap-2 mt-2">
+                                        <span class="ph ph-tag text-secondary"></span>
+                                        <span class="code text-secondary">AN6810 <span class="discount">(-$14.20)</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <del class="caption1 text-secondary text-end org_price">$99.00</del>
+                                <strong class="text-title price">$60.00</strong>
+                            </div>
+                        </div>
+                        <div class="item flex items-center justify-between gap-6">
+                            <div class="flex items-center gap-6">
+                                <div class="bg_img relative flex-shrink-0 w-[100px] h-[100px]">
+                                    <img src="./assets/images/product/1000x1000.png" alt="product/1000x1000" class="w-full h-full object-cover rounded-lg">
+                                    <span class="quantity flex items-center justify-center absolute -top-3 -right-3 w-7 h-7 rounded-full bg-black text-white">1</span>
+                                </div>
+                                <div>
+                                    <strong class="name text-title">Contrasting sheepskin sweatshirt</strong>
+                                    <div class="flex items-center gap-2 mt-2">
+                                        <span class="ph ph-tag text-secondary"></span>
+                                        <span class="code text-secondary">AN6810 <span class="discount">(-$14.20)</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <del class="caption1 text-secondary text-end org_price">$99.00</del>
+                                <strong class="text-title price">$60.00</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total-cart-block flex colunm items-center justify-between mt-8">
+                        <div class="gap-2">
+                            <p class="heading4">Discount</p>
+                            <span class="body1 text-secondary">PKR</span>
+                            <strong id="total-discount" class="heading4"> 186,99</strong>
+                        </div>
+                        <div class="gap-2">
+                            <p class="heading4">Total</p>
+                            <span class="body1 text-secondary">PKR</span>
+                            <strong id="total-price" class="heading4">  186,99</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script src="/js/checkout.js"></script>
+

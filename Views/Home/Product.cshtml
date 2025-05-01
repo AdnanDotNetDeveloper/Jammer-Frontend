@@ -1,0 +1,180 @@
+﻿ 
+@{
+    ViewData["Title"] = "Product Page";
+}
+
+
+<div class="breadcrumb-product">
+    <div class="main bg-surface md:pt-[88px] pt-[70px] pb-[14px]">
+        <div class="container flex items-center justify-between flex-wrap gap-3">
+            <div class="left flex items-center gap-1">
+                <a href="/" class="caption1 text-secondary2 hover:underline">Homepage</a>
+                <i class="ph ph-caret-right text-xs text-secondary2"></i>
+                <div class="caption1 text-secondary2">Product</div>
+            </div>
+            <div class="right flex items-center gap-3">
+                <div class="prev-btn flex items-center cursor-pointer text-secondary hover:text-black pr-3 border-r border-line">
+                    <span class="caption1 pl-1"></span>
+                </div>
+                <div class="next-btn flex items-center cursor-pointer text-secondary hover:text-black">
+                    <span class="caption1 pr-1"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+
+<div class="product-detail default">
+    <div class="featured-product underwear filter-product-img md:py-20 py-14">
+        <div class="container flex justify-between gap-y-6 flex-wrap">
+            <div class="list-img md:w-1/2 md:pr-[45px] w-full flex-shrink-0">
+                <div class="sticky">
+                    <div class="swiper mySwiper2 rounded-2xl overflow-hidden">
+                        <div class="swiper-wrapper">
+                            <!--  -->
+                        </div>
+                    </div>
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <!--  -->
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper popup-img">
+                    <span class="close-popup-btn absolute top-4 right-4 z-[2]">
+                        <i class="ph ph-x text-3xl text-white"></i>
+                    </span>
+                    <div class="swiper-wrapper">
+                        <!--  -->
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+
+            <div class="product-item product-infor md:w-1/2 w-full lg:pl-[15px] md:pl-2">
+                <div class="flex justify-between">
+                    <div>
+                        <div class="product-category caption2 text-secondary font-semibold uppercase"></div>
+                        <div class="main-product-name heading4 mt-1"></div>
+                    </div>
+                    <div class="add-wishlist-btn w-10 h-10 flex-shrink-0 flex items-center justify-center border border-line cursor-pointer rounded-lg duration-300 hover:bg-black hover:text-white">
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 flex-wrap mt-5 pb-6 border-b border-line">
+                    <div class="main-product-price heading5"></div>
+                    <div class="w-px h-4 bg-line"></div>
+                    <div class="main-product-origin-price font-normal text-secondary2">
+                        <del></del>
+                    </div>
+                    <div class="main-product-description text-secondary mt-3"></div>
+                </div>
+                <div class="list-action mt-6">
+
+                    <div class="text-title mt-5">Quantity:</div>
+                    <div id="popupModal" class="fixed bg-gray-800 flex justify-center items-center border border-black rounded z-10" style="display:none;top: 10%;right: 2%;">
+                        <div class="bg-white rounded-lg shadow-lg p-4">
+                            <h2 id="popupMessage" class="text-xl font-bold mb-4">add</h2>
+                            <button id="closePopup" class="button-main w-full text-center rounded">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                    <div class="choose-quantity flex items-center max-xl:flex-wrap lg:justify-between gap-5 mt-3">
+                        <div class="quantity-block md:p-3 max-md:py-1.5 max-md:px-3 flex items-center justify-between rounded-lg border border-line sm:w-[140px] w-[120px] flex-shrink-0">
+                            <i class="ph-bold ph-minus cursor-pointer body1"></i>
+                            <div class="quantity body1 font-semibold" id="quantity">1</div>
+                            <i class="ph-bold ph-plus cursor-pointer body1"></i>
+                        </div>
+            
+                        <div class="main-add-cart-btn button-main whitespace-nowrap w-full text-center bg-white text-black border border-black">Add To Cart</div>
+                      
+                    </div>
+                    <div class="button-block mt-5">
+                        <a id="buyNowBtn" href="" class="button-main w-full text-center">Buy It Now</a>
+                    </div>
+                    <div class="more-infor mt-6">
+     
+                    </div>
+                    <div class="list-payment mt-7">
+                        <div class="main-content lg:pt-8 pt-6 lg:pb-6 pb-4 sm:px-4 px-3 border border-line rounded-xl relative max-md:w-2/3 max-sm:w-full">
+      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="desc-tab md:pb-20 pb-10">
+        <div class="container">
+            <div class="flex items-center justify-center ">
+                <div class="menu-tab flex items-center md:gap-[60px] gap-8">
+                    <div class="tab-item heading5 has-line-before text-secondary2 hover:text-black duration-300 active">Description</div>
+                </div>
+            </div>
+            <div style="background:#f7f7f7" class="p-6 mx-auto mt-6 rounded font-bold w-9/12 max-md:w-2/3 max-sm:w-full" id="product-description">
+
+
+            </div>
+        </div>
+    </div>
+    <div class="review-block md:py-20 py-10 bg-surface">
+        <div class="container">
+            <div class="heading flex items-center justify-between flex-wrap gap-4">
+                <div class="heading4">Customer Review</div>
+                <a href="#form-review" class="button-main bg-white text-black border border-black">Write Reviews </a>
+            </div>
+            <div class="reviews-section flex justify-start py-6 max-md:flex-col gap-6">
+
+            </div>
+            <div id="form-review" class="form-review pt-6">
+                <div class="heading4">Leave A comment</div>
+                <div class="grid sm:grid-cols-2 gap-4 gap-y-5 mt-6">
+       
+                    <div class="col-span-full message">
+                        <textarea class="border border-line px-4 py-3 w-full rounded-lg" id="message" name="message" rows="3" placeholder="Your message *" required></textarea>
+                    </div>
+                    <div class="points col-span-full">
+
+                        <div class="flex items-center" id="starRating">
+                            <svg data-rating="1" class="star w-6 h-6 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                            <svg data-rating="2" class="star w-6 h-6 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                            <svg data-rating="3" class="star w-6 h-6 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                            <svg data-rating="4" class="star w-6 h-6 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                            <svg data-rating="5" class="star w-6 h-6 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                        </div>
+
+
+
+                    </div>
+                    
+                    <div class="col-span-full sm:pt-3">
+                        <button id="submit-review-btn" class="button-main bg-white text-black border border-black">Submit Reviews</button>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+<div id="popup-message" class="fixed bg-green-500 text-white p-4 rounded-lg hidden"></div>
+
+<div class="tab-features-block filter-product-block md:py-20 py-10">
+</div>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script src="/js/product.js"></script>
+

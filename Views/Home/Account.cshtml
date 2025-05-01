@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Account Page";
+}
+<div class="breadcrumb-block style-shared">
+    <div class="breadcrumb-main bg-linear overflow-hidden">
+        <div class="container lg:pt-[134px] pt-24 pb-10 relative">
+            <div class="main-content w-full h-full flex flex-col items-center justify-center relative z-[1]">
+                <div class="text-content">
+                    <div class="heading2 text-center">My Account</div>
+                    <div class="link flex items-center justify-center gap-1 caption1 mt-3">
+                        <a href="index.html">Homepage</a>
+                        <i class="ph ph-caret-right text-sm text-secondary2"></i>
+                        <div class="text-secondary2 capitalize">My Account</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="my-account-block md:py-20 py-10">
+    <div class="container">
+        <div class="content-main lg:px-[60px] md:px-4 flex gap-y-8 max-md:flex-col w-full">
+            <div class="left xl:w-1/3 md:w-5/12 w-full xl:pr-[40px] lg:pr-[28px] md:pr-[16px]">
+                <div class="user-infor bg-surface md:px-8 px-5 md:py-10 py-6 md:rounded-[20px] rounded-xl">
+                    <div class="heading flex flex-col items-center justify-center">
+                        <div class="avatar">
+                            <img src="./assets/images/avatar/1.png" alt="avatar" class="md:w-[140px] w-[120px] md:h-[140px] h-[120px] rounded-full" />
+                        </div>
+                        <div class="name heading6 mt-4 text-center">Tony Nguyen</div>
+                        <div class="mail heading6 font-normal normal-case text-center mt-1">jammer@gmail.com</div>
+                    </div>
+                    <div class="menu-tab lg:mt-10 mt-6">
+                        <div class="item px-5 py-4 flex items-center gap-3 cursor-pointer">
+                            <i class="ph-bold ph-user text-xl"></i>
+                            <div class="heading6">Account Details</div>
+                        </div>
+                        <div id="order-button" class="item px-5 py-4 flex items-center gap-3 cursor-pointer mt-2">
+                            <i class="ph-bold ph-bag text-xl"></i>
+                            <div class="heading6">Your Orders</div>
+                        </div>
+                        <div id="logout-button" class="item px-5 py-4 flex items-center gap-3 cursor-pointer mt-2">
+                            <i class="ph-bold ph-sign-out text-xl"></i>
+                            <div class="heading6">Logout</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="right xl:w-2/3 md:w-7/12 w-full xl:pl-[40px] lg:pl-[28px] md:pl-[16px] flex items-center">
+                <div class="text-content w-full">
+                    <div class="">
+                        <div class="heading5 pb-4">Information</div>
+                        <div class="grid sm:grid-cols-2 gap-4 gap-y-5">
+                            <div class="first-name">
+                                <input class="border-line px-4 pt-3 pb-3 w-full rounded-lg" id="firstName" type="text" placeholder="Full name" required />
+                            </div>
+                            <div class="phone-number">
+                                <input class="border-line px-4 pt-3 pb-3 w-full rounded-lg" id="phoneNumber" type="text" placeholder="Phone number" required />
+                            </div>
+                            <div class="image">
+                                <div class="flex flex-col justify-center">
+                                    <label for="image" class="cursor-pointer bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 rounded">
+                                        Upload Profile Image
+                                    </label>
+                                    <input type="file" id="image" class="hidden" accept="image/*" />
+                                    <img id="imagePreview" style="width:150px; height:150px; border-radius:50%" src="" alt="Image Preview" class="mt-4 hidden bg-surface w-16 h-16 object-cover rounded-lg" />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="heading5 pb-4 lg:mt-10 mt-6">Change Password</div>
+                        <div class="pass">
+                            <input class="border-line px-4 pt-3 pb-3 w-full rounded-lg" id="password" type="password" placeholder="Password *" required />
+                        </div>
+                        <div class="new-pass mt-5">
+                            <input class="border-line px-4 pt-3 pb-3 w-full rounded-lg" id="newPassword" type="password" placeholder="New Password *" required />
+                        </div>
+                        <div class="confirm-pass mt-5">
+                            <input class="border-line px-4 pt-3 pb-3 w-full rounded-lg" id="confirmPassword" type="password" placeholder="Confirm Password *" required />
+                        </div>
+                        <div class="block-button lg:mt-10 mt-6">
+                            <button class="button-main">Update Account</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="popupMessage" class="fixed top-4 right-4 hidden z-50">
+                <div id="popupMessageContent" class="p-4 rounded-lg shadow-lg bg-green-500 text-white"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script src="/js/account.js"></script>

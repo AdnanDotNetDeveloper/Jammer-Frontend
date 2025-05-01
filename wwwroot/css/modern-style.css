@@ -1,0 +1,240 @@
+/* Modern UI styles for Jammer Frontend */
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Base styles */
+:root {
+  --transition-base: all 0.3s ease;
+  --transition-fast: all 0.2s ease;
+  --transition-slow: all 0.5s ease;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #374151;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-weight: 600;
+}
+
+/* Modern button styles */
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-300;
+}
+
+.btn-primary {
+  @apply bg-primary text-white hover:bg-primary-600 focus:ring-2 focus:ring-primary-300 focus:outline-none;
+}
+
+.btn-secondary {
+  @apply bg-secondary-100 text-secondary-700 hover:bg-secondary-200 focus:ring-2 focus:ring-secondary-200 focus:outline-none;
+}
+
+.btn-outline {
+  @apply border border-primary text-primary hover:bg-primary hover:text-white focus:ring-2 focus:ring-primary-300 focus:outline-none;
+}
+
+/* Form controls */
+.form-input {
+  @apply w-full px-4 py-2 rounded-lg border border-secondary-200 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all duration-200;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-secondary-700 mb-1;
+}
+
+/* Card component */
+.card {
+  @apply bg-white rounded-xl shadow-soft overflow-hidden transition-all duration-300;
+}
+
+.card-hover {
+  @apply hover:shadow-medium;
+}
+
+/* Badge component */
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.badge-primary {
+  @apply bg-primary-100 text-primary-800;
+}
+
+.badge-success {
+  @apply bg-success-100 text-success-800;
+}
+
+.badge-warning {
+  @apply bg-warning-100 text-warning-800;
+}
+
+.badge-danger {
+  @apply bg-danger-100 text-danger-800;
+}
+
+/* Modern navigation */
+.nav-link {
+  @apply text-secondary-600 hover:text-primary transition-colors duration-200;
+}
+
+.nav-link-active {
+  @apply font-medium text-primary;
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-in-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Custom loading spinner */
+.spinner {
+  @apply h-5 w-5 rounded-full border-2 border-secondary-200;
+  border-top-color: theme('colors.primary.500');
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Modern layout utilities */
+.container-narrow {
+  @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Product grid */
+.product-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
+}
+
+/* Product card */
+.product-card {
+  @apply flex flex-col rounded-xl overflow-hidden shadow-soft transition-all duration-300 hover:shadow-medium;
+}
+
+.product-image {
+  @apply relative w-full pb-[100%] overflow-hidden bg-secondary-100;
+}
+
+.product-image img {
+  @apply absolute top-0 left-0 w-full h-full object-cover;
+}
+
+.product-info {
+  @apply p-4 flex flex-col flex-grow;
+}
+
+.product-title {
+  @apply font-medium text-secondary-900 hover:text-primary transition-colors duration-200;
+}
+
+.product-price {
+  @apply text-lg font-semibold text-secondary-900 mt-1;
+}
+
+/* Modern alert component */
+.alert {
+  @apply rounded-lg p-4 my-4 border-l-4;
+}
+
+.alert-info {
+  @apply bg-primary-50 border-primary text-primary-800;
+}
+
+.alert-success {
+  @apply bg-success-50 border-success text-success-800;
+}
+
+.alert-warning {
+  @apply bg-warning-50 border-warning text-warning-800;
+}
+
+.alert-danger {
+  @apply bg-danger-50 border-danger text-danger-800;
+}
+
+/* Notifications */
+.notification {
+  @apply fixed top-4 right-4 p-4 rounded-lg shadow-medium z-50 animate-slide-in-right;
+}
+
+.notification-success {
+  @apply bg-success-50 border-l-4 border-success text-success-800;
+}
+
+.notification-error {
+  @apply bg-danger-50 border-l-4 border-danger text-danger-800;
+}
+
+.notification-info {
+  @apply bg-primary-50 border-l-4 border-primary text-primary-800;
+}
+
+/* Form animations */
+.form-group {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: formElementAppear 0.5s ease forwards;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+.form-group:nth-child(5) { animation-delay: 0.5s; }
+.form-group:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes formElementAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 

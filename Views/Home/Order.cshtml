@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Ttile"] = "Order Page";
+}
+<div class="breadcrumb-block style-shared">
+    <div class="breadcrumb-main bg-linear overflow-hidden">
+        <div class="container lg:pt-[134px] pt-24 pb-10 relative">
+            <div class="main-content w-full h-full flex flex-col items-center justify-center relative z-[1]">
+                <div class="text-content">
+                    <div class="heading2 text-center">Orders</div>
+                    <div class="link flex items-center justify-center gap-1 caption1 mt-3">
+                        <a href="index.html">Homepage</a>
+                        <i class="ph ph-caret-right text-sm text-secondary2"></i>
+                        <div class="text-secondary2 capitalize">User Orders</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ </div>
+
+    <div class="container mx-auto p-6">
+
+        <table id="orderTable" class="min-w-full bg-white shadow-md rounded">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2 border">Order ID</th>
+                    <th class="px-4 py-2 border">Total Amount</th>
+                    <th class="px-4 py-2 border">Status</th>
+                    <th class="px-4 py-2 border">Order Date</th>
+                    <th class="px-4 py-2 border">Number of Items</th>
+                    <th class="px-4 py-2 border">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="orderBody"></tbody>
+        </table>
+    </div>
+
+    <div id="itemPopup" class="fixed inset-0 hidden bg-gray-800 bg-opacity-75 flex items-center justify-center">
+        <div class="bg-white p-6 rounded shadow-md w-96">
+            <h2 class="text-xl font-semibold mb-4">Order Items</h2>
+            <div id="itemDetails" class="space-y-2"></div>
+            <button id="closePopup" class="mt-4 px-4 py-2 bg-red text-white rounded">Close</button>
+        </div>
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script src="/js/order.js"></script>
+

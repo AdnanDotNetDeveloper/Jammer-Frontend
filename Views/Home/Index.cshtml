@@ -1,0 +1,502 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_LayoutIndex";
+}
+<link href="/assets/css/swiper-bundle.min.css" rel="stylesheet" />
+<style>
+    .product-item:hover .list-action {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .list-action {
+        opacity: 0;
+        transform: translateY(10px); 
+        transition: opacity 0.3s, transform 0.3s;
+        z-index: 10;
+    }
+    
+    /* Modern hover effects */
+    .product-item {
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    
+    .product-item:hover {
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        transform: translateY(-5px);
+    }
+    
+    /* Smooth scroll behavior */
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    /* Animation classes */
+    .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+</style>
+
+<!-- <div id="top-nav" class="top-nav bg-[#263587] md:h-[44px] h-[30px] border-b border-surface1">
+    <div class="container mx-auto h-full">
+        <div class="top-nav-main flex justify-between max-md:justify-center h-full">
+            <div class="left-content flex items-center gap-5 max-md:hidden">
+                <div class="choose-type choose-language flex items-center gap-1.5">
+                    <div class="select relative">
+                        <p class="selected caption2 text-white">English</p>
+                        <ul class="list-option bg-white">
+                            <li data-item="English" class="caption2 active">English</li>
+                            <li data-item="Espana" class="caption2">Espana</li>
+                            <li data-item="France" class="caption2">France</li>
+                        </ul>
+                    </div>
+                    <i class="ph ph-caret-down text-xs text-white"></i>
+                </div>
+                <div class="choose-type choose-currency flex items-center gap-1.5">
+                    <div class="select relative">
+                        <p class="selected caption2 text-white">USD</p>
+                        <ul class="list-option bg-white">
+                            <li data-item="USD" class="caption2 active">USD</li>
+                            <li data-item="EUR" class="caption2">EUR</li>
+                            <li data-item="GBP" class="caption2">GBP</li>
+                        </ul>
+                    </div>
+                    <i class="ph ph-caret-down text-xs text-white"></i>
+                </div>
+            </div>
+            <div class="text-center text-button-uppercase text-white flex items-center">New customers save 10% with code GET10</div>
+            <div class="right-content flex items-center gap-5 max-md:hidden">
+                <a href="https://www.facebook.com/" target="_blank">
+                    <i class="icon-facebook text-white"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank">
+                    <i class="icon-instagram text-white"></i>
+                </a>
+                <a href="https://www.youtube.com/" target="_blank">
+                    <i class="icon-youtube text-white"></i>
+                </a>
+                <a href="https://twitter.com/" target="_blank">
+                    <i class="icon-twitter text-white"></i>
+                </a>
+                <a href="https://pinterest.com/" target="_blank">
+                    <i class="icon-pinterest text-white"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div id="header" class="relative w-full style-marketplace">
+    <div class="header-menu style-marketplace relative bg-[#263587] w-full md:h-[74px] h-[56px]" data-aos="fade-down">
+        <div class="container mx-auto h-full">
+            <div class="header-main flex items-center justify-between h-full">
+                <div class="menu-mobile-icon lg:hidden flex items-center">
+                    <i class="icon-category text-white text-2xl"></i>
+                </div>
+                <a href="/" class="flex items-center" data-aos="fade-right" data-aos-delay="100">
+                    <h4 class="heading4 text-white">Jammer</h4>
+                </a>
+                <div class="relative w-2/3 pl-8 flex items-center h-[44px] max-lg:hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-full flex items-center h-full">
+                        <input type="text" id="search-input" class="h-full px-4 w-full border border-line rounded-l" placeholder="What are you looking for today?" />
+                        <button id="search-button" class="button-main bg-red text-white h-full flex items-center px-7 rounded-none rounded-r">Search</button>
+                    </div>
+
+                    <!-- Popup container for search results -->
+                    <div id="search-popup" style="top:45px" class="search-popup hidden absolute bg-white border border-gray-300 p-4 rounded shadow-lg w-full max-w-md z-50">
+                        <!-- Search results will be appended here dynamically -->
+                    </div>
+                </div>
+                <div class="right flex gap-12" data-aos="fade-left" data-aos-delay="300">
+                    <div class="flex items-center gap-4">
+                        <div id="user-icon" class="user-icon flex items-center justify-center cursor-pointer">
+                            <i class="ph-bold ph-user text-white text-2xl"></i>
+                            <div class="login-popup absolute top-[74px] w-[320px] p-7 rounded-xl bg-white shadow-lg z-50">
+                                <a href="/Home/Login" class="button-main w-full text-center">Login</a>
+                                <div class="text-secondary text-center mt-3 pb-4">
+                                    Don't have an account?
+                                    <a href="/Home/signup" class="text-black pl-1 hover:underline">Register </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="account-icons" class="flex items-center justify-center cursor-pointer gap-4">
+                            <div class="max-md:hidden wishlist-icon flex items-center relative cursor-pointer">
+                                <a href="/Home/Account">
+                                    <i class="ph-bold ph-user text-white text-2xl transition-transform hover:scale-110" style="color:white"></i>
+                                </a>
+                            </div>
+                            <div class="max-md:hidden wishlist-icon flex items-center relative cursor-pointer">
+                                <a href="/Home/Wishlist">
+                                    <i id="to-wishlist" class="ph-bold ph-heart text-white text-2xl transition-transform hover:scale-110" style="color:white"></i>
+                                </a>
+                            </div>
+                            <div class="max-md:hidden cart-icon flex items-center relative cursor-pointer">
+                                <a href="/Home/Cart">
+                                    <i id="to-cart" class="ph-bold ph-handbag text-white text-2xl transition-transform hover:scale-110" style="color:white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-nav-menu relative bg-white border-b border-line h-[44px] max-lg:hidden z-10" data-aos="fade-down" data-aos-delay="100">
+        <div class="container h-full">
+            <div class="top-nav-menu-main flex items-center justify-between h-full">
+                <div class="left flex items-center h-full">
+                   <div class="menu-department-block relative h-full">
+                        <div class="menu-department-btn relative flex items-center sm:gap-24 gap-4 h-full w-fit cursor-pointer">
+                            <div class="flex items-center gap-3">
+                                <i class="ph ph-list text-xl max-sm:text-base"></i>
+                                <div class="text-button whitespace-nowrap">Department</div>
+                            </div>
+                            <i class="ph ph-caret-down text-xl max-sm:text-base"></i>
+                        </div>
+                       <div class="sub-menu-department style-marketplace absolute top-[84px] left-0 right-0 px-[26px] py-[5px] bg-surface rounded-xl border border-line open shadow-lg">
+                            <!-- Categories will be dynamically loaded here -->
+                        </div>
+                    </div>
+                  <div class="menu-main style-eight h-full pl-12 max-lg:hidden">
+                        <ul class="flex items-center gap-8 h-full">
+                            <li class="h-full">
+                                <a href="/" class="text-button-uppercase duration-300 h-full flex items-center justify-center hover:text-[#263587]"> Home </a>
+                            </li>
+                            <li class="h-full">
+                                <a href="/Home/About" class="text-button-uppercase duration-300 h-full flex items-center justify-center hover:text-[#263587]"> About </a>
+                            </li>
+                            <li class="h-full">
+                                <a href="/Home/Contact" class="text-button-uppercase duration-300 h-full flex items-center justify-center hover:text-[#263587]"> Contact </a>
+                            </li>
+                            <li class="h-full relative">
+                                <a href="/Home/Blog" class="text-button-uppercase duration-300 h-full flex items-center justify-center hover:text-[#263587]"> Blog </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="right flex items-center gap-1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Mobile -->
+    <div id="menu-mobile" class="">
+        <div class="menu-container bg-white h-full shadow-lg">
+            <div class="container h-full">
+                <div class="menu-main h-full overflow-hidden">
+                    <div class="heading py-2 relative flex items-center justify-center">
+                        <div class="close-menu-mobile-btn absolute left-0 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-surface flex items-center justify-center">
+                            <i class="ph ph-x text-sm"></i>
+                        </div>
+                        <a href="/" class="logo text-3xl font-semibold text-center">Jammer</a>
+                    </div>
+                    <div class="relative mt-2">
+                        <i class="ph ph-magnifying-glass text-xl absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer"></i>
+                        <input type="text" id="search-input-mobile" placeholder="What are you looking for?" class="h-12 rounded-lg border border-line text-sm w-full pl-10 pr-14" />
+                        <button id="search-button-mobile" class="button-main bg-red text-white h-10 flex items-center px-4 rounded-lg absolute right-1 top-1">Search</button>
+
+                        <!-- Popup container for search results -->
+                        <div id="search-popup-mobile" style="top:45px" class="search-popup hidden absolute bg-white border border-gray-300 p-4 rounded shadow-lg w-full max-w-md z-50">
+                            <!-- Search results will be appended here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu bar -->
+    <div class="menu_bar fixed bg-white bottom-0 left-0 w-full h-[70px] sm:hidden z-[101] shadow-lg">
+        <div class="menu_bar-inner grid grid-cols-4 items-center h-full">
+            <a href="/" class="menu_bar-link flex flex-col items-center gap-1">
+                <span class="ph-bold ph-house text-2xl block transition-transform hover:scale-110"></span>
+                <span class="menu_bar-title caption2 font-semibold">Home</span>
+            </a>
+            <a href="/" class="menu_bar-link flex flex-col items-center gap-1">
+                <span class="ph-bold ph-list text-2xl block transition-transform hover:scale-110"></span>
+                <span class="menu_bar-title caption2 font-semibold">Menu</span>
+            </a>
+            <a href="/Home/Search" class="menu_bar-link flex flex-col items-center gap-1">
+                <span class="ph-bold ph-magnifying-glass text-2xl block transition-transform hover:scale-110"></span>
+                <span class="menu_bar-title caption2 font-semibold">Search</span>
+            </a>
+            <a href="/Home/Cart" class="menu_bar-link flex flex-col items-center gap-1">
+                <span class="ph-bold ph-handbag text-2xl block transition-transform hover:scale-110"></span>
+                <span class="menu_bar-title caption2 font-semibold">Cart</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Slider -->
+    <div class="slider-block style-marketplace lg:h-[500px] md:h-[400px] sm:h-[320px] h-[280px] w-full" data-aos="fade-up" data-aos-delay="400">
+        <div class="container pt-10 flex justify-end h-full w-full">
+            <div class="slider-main lg:pl-5 h-full w-full">
+                <div class="swiper h-full relative rounded-2xl overflow-hidden shadow-lg">
+                    <div class="swiper-wrapper h-full w-full flex items-center bg-surface relative">
+                        <!-- Slides will be loaded dynamically -->
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="banner-block md:pt-10 pt-8" data-aos="fade-up">
+    <div class="container">
+        <div class="list-banner grid lg:grid-cols-3 sm:grid-cols-2 lg:gap-[30px] gap-[20px]">
+            <a href="/" class="banner-item relative py-[53.5px] px-10 bg-[#63B89F] block duration-500 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all" data-aos="fade-right" data-aos-delay="100">
+                <div class="banner-img w-1/2 absolute top-1/2 -translate-y-1/2 right-10">
+                    <img src="./assets/images/banner/marketplace1.png" id="category-img-1" class="w-full duration-500 hover:scale-105 transition-transform" alt="img" />
+                </div>
+                <div class="banner-content relative">
+                    <div class="heading6 text-white" id="category-name-1">Surface</div>
+                    <div class="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2" id="shop-btn-1">Shop Surface</div>
+                </div>
+            </a>
+            <a href="/" class="banner-item relative py-[53.5px] px-10 bg-[#8684D4] block duration-500 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all" data-aos="fade-up" data-aos-delay="200">
+                <div class="banner-img w-1/2 absolute top-1/2 -translate-y-1/2 right-10">
+                    <img src="./assets/images/banner/marketplace2.png" class="w-full duration-500 hover:scale-105 transition-transform" id="category-img-2" alt="img" />
+                </div>
+                <div class="banner-content relative">
+                    <div class="heading6 text-white" id="category-name-2"></div>
+                    <div class="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2" id="shop-btn-2">Shop Deals</div>
+                </div>
+            </a>
+            <a href="/" class="banner-item relative py-[53.5px] px-10 bg-[#BE4468] block duration-500 max-lg:hidden max-sm:block rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all" data-aos="fade-left" data-aos-delay="300">
+                <div class="banner-img w-1/2 absolute top-1/2 -translate-y-1/2 right-10">
+                    <img src="./assets/images/banner/marketplace3.png" class="w-full duration-500 hover:scale-105 transition-transform" id="category-img-3" alt="img" />
+                </div>
+                <div class="banner-content relative">
+                    <div class="heading6 text-white" id="category-name-3">Cameras</div>
+                    <div class="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2" id="shop-btn-3">Shop Camera</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Our Collections HTML -->
+<div class="collection-block md:pt-[60px] pt-10" data-aos="fade-up">
+    <div class="container">
+        <div class="heading flex items-center justify-between gap-5 flex-wrap">
+            <div class="heading3">Our Collections</div>
+            <a href="/" class="text-button pb-0.5 border-b-2 border-black hover:text-[#263587] hover:border-[#263587] transition-colors">View All</a>
+        </div>
+        <div class="list grid xl:grid-cols-4 sm:grid-cols-2 sm:gap-[30px] gap-[20px] md:mt-10 mt-6">
+            <div class="item flex gap-3 px-5 py-6 border border-line rounded-2xl hover:shadow-lg transition-all" id="category-card-1" data-aos="fade-up" data-aos-delay="100">
+                <a href="/" class="img-product w-[100px] h-[100px] flex-shrink-0">
+                    <img src="./assets/images/collection/marketplace1.png" class="w-full h-full object-cover transition-transform hover:scale-105" alt="img" />
+                </a>
+                <div class="text-content w-full">
+                    <div class="heading6 pb-4" id="category-parent-1">Smart Phones</div>
+                    <ul>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-1-child-4" class="has-line-before caption1 text-secondary hover:text-black">Postpaid Phones</a>
+                        </li>
+                    </ul>
+                    <a href="/" class="flex items-center gap-1.5 mt-4 hover:text-[#263587] transition-colors group">
+                        <span class="text-button" id="category-parent-1-btn">All Smartphone</span>
+                        <i class="ph-bold ph-caret-double-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="item flex gap-3 px-5 py-6 border border-line rounded-2xl hover:shadow-lg transition-all" id="category-card-2" data-aos="fade-up" data-aos-delay="200">
+                <a href="/" class="img-product w-[100px] h-[100px] flex-shrink-0">
+                    <img src="./assets/images/collection/marketplace2.png" class="w-full h-full object-cover transition-transform hover:scale-105" alt="img" />
+                </a>
+                <div class="text-content w-full">
+                    <div class="heading6 pb-4" id="category-parent-2">Tablet & IPads</div>
+                    <ul>
+                        <li>
+                            <a href="/" id="category-parent-2-child-1" class="has-line-before caption1 text-secondary hover:text-black">Tablets</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-2-child-2" class="has-line-before caption1 text-secondary hover:text-black">iPad</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-2-child-3" class="has-line-before caption1 text-secondary hover:text-black">Windows Tablets</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-2-child-4" class="has-line-before caption1 text-secondary hover:text-black">Tablet Accessories</a>
+                        </li>
+                    </ul>
+                    <a href="/" class="flex items-center gap-1.5 mt-4 hover:text-[#263587] transition-colors group">
+                        <span class="text-button" id="category-parent-2-btn">All Smartphone</span>
+                        <i class="ph-bold ph-caret-double-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="item flex gap-3 px-5 py-6 border border-line rounded-2xl hover:shadow-lg transition-all" id="category-card-3" data-aos="fade-up" data-aos-delay="300">
+                <a href="/" class="img-product w-[100px] h-[100px] flex-shrink-0">
+                    <img src="./assets/images/collection/marketplace3.png" class="w-full h-full object-cover transition-transform hover:scale-105" alt="img" />
+                </a>
+                <div class="text-content w-full">
+                    <div class="heading6 pb-4" id="category-parent-3">Smart Watch</div>
+                    <ul>
+                        <li>
+                            <a href="/" id="category-parent-3-child-1" class="has-line-before caption1 text-secondary hover:text-black">Sport Watches</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/"id="category-parent-3-child-2" class="has-line-before caption1 text-secondary hover:text-black">Timex Watches</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-3-child-3" class="has-line-before caption1 text-secondary hover:text-black">Watch Brands</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-3-child-4" class="has-line-before caption1 text-secondary hover:text-black">Women Watches</a>
+                        </li>
+                    </ul>
+                    <a href="/" class="flex items-center gap-1.5 mt-4 hover:text-[#263587] transition-colors group">
+                        <span class="text-button" id="category-parent-3-btn">All Smartphone</span>
+                        <i class="ph-bold ph-caret-double-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="item flex gap-3 px-5 py-6 border border-line rounded-2xl hover:shadow-lg transition-all" id="category-card-4" data-aos="fade-up" data-aos-delay="400">
+                <a href="/" class="img-product w-[100px] h-[100px] flex-shrink-0">
+                    <img src="./assets/images/collection/marketplace4.png" class="w-full h-full object-cover transition-transform hover:scale-105" alt="img" />
+                </a>
+                <div class="text-content w-full">
+                    <div class="heading6 pb-4" id="category-parent-4">Accessories</div>
+                    <ul>
+                        <li>
+                            <a href="/" id="category-parent-4-child-1" class="has-line-before caption1 text-secondary hover:text-black">Accessories</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-4-child-2" class="has-line-before caption1 text-secondary hover:text-black">Changers</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-4-child-3" class="has-line-before caption1 text-secondary hover:text-black">Power Banks</a>
+                        </li>
+                        <li class="mt-1">
+                            <a href="/" id="category-parent-4-child-4" class="has-line-before caption1 text-secondary hover:text-black">Smartphones</a>
+                        </li>
+                    </ul>
+                    <a href="/" class="flex items-center gap-1.5 mt-4 hover:text-[#263587] transition-colors group">
+                        <span class="text-button" id="category-parent-4-btn">All Smartphone</span>
+                        <i class="ph-bold ph-caret-double-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Best Selling Section HTML -->
+<div class="tab-features-block style-marketplace md:pt-[60px] pt-10" data-aos="fade-up">
+    <div class="container">
+        <div class="heading flex items-center justify-between gap-5 flex-wrap w-full">
+            <div class="heading3">Best Sellers</div>
+            <div class="menu-tab flex items-center bg-surface rounded-2xl overflow-hidden shadow-sm">
+                <div class="menu flex items-center gap-2 p-1" id="category-buttons">
+                    <!-- Category buttons will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-5 flex-wrap w-full mt-8" id="list-product" data-aos="fade-up" data-aos-delay="200">
+            <!-- Product cards will be dynamically inserted here -->
+        </div>
+    </div>
+</div>
+
+<!-- Best Selling Section Banner HTML -->
+<div class="banner-block md:pt-[60px] pt-8" data-aos="fade-up">
+    <div class="container">
+        <div class="list-banner grid sm:grid-cols-2 lg:gap-[30px] gap-[20px]">
+            <a href="/" class="banner-item relative py-[53.5px] px-10 bg-[#848EFF] block duration-500 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all" id="category-banner-1" data-aos="fade-right" data-aos-delay="100">
+                <div class="banner-img w-[173px] absolute top-1/2 -translate-y-1/2 right-14">
+                    <img src="./assets/images/banner/marketplace4.png" class="w-full duration-500 hover:scale-105 transition-transform" alt="category-img-1" />
+                </div>
+                <div class="banner-content relative">
+                    <div class="heading5 text-white" id="category-title-1">Super Sale <br />Apple Watch</div>
+                    <div class="text-title text-white mt-2" id="category-discount-1">Save $599.00</div>
+                    <div class="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2 hover:pb-2 transition-all">Shop Now</div>
+                </div>
+            </a>
+            <a href="/" class="banner-item relative py-[53.5px] px-10 bg-[#E7514A] block duration-500 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all" id="category-banner-2" data-aos="fade-left" data-aos-delay="200">
+                <div class="banner-img w-1/2 absolute top-1/2 -translate-y-1/2 right-10">
+                    <img src="./assets/images/banner/marketplace5.png" class="w-full duration-500 hover:scale-105 transition-transform" alt="category-img-2" />
+                </div>
+                <div class="banner-content relative">
+                    <div class="heading5 text-white" id="category-title-2">Deals Good <br />Iphone 15 pro</div>
+                    <div class="text-title text-white mt-2" id="category-discount-2">Save $599.00</div>
+                    <div class="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2 hover:pb-2 transition-all">Shop Now</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Top Rated Products Section HTML -->
+<div class="top-product bg-surface md:mt-[60px] mt-10 md:py-[60px] py-10" data-aos="fade-up">
+    <div class="container">
+        <div class="heading flex items-center justify-between gap-5 flex-wrap">
+            <div class="heading3">Top Rated Products</div>
+            <a href="/" class="text-button pb-0.5 border-b-2 border-black hover:text-[#263587] hover:border-[#263587] transition-colors">View All</a>
+        </div>
+        <div class="list grid xl:grid-cols-3 sm:grid-cols-2 gap-4 md:mt-10 mt-6" id="list" data-aos="fade-up" data-aos-delay="200">
+            <!-- Product items will be loaded dynamically -->
+        </div>
+    </div>
+</div>
+
+<!-- Recommended For You HTML -->
+<div class="recommend md:mt-[60px] mt-10" data-aos="fade-up">
+    <div class="container">
+        <div class="heading flex items-center justify-between gap-5 flex-wrap">
+            <div class="heading3">Recommended For You</div>
+            <a href="/" class="text-button pb-0.5 border-b-2 border-black hover:text-[#263587] hover:border-[#263587] transition-colors">View All</a>
+        </div>
+        <div class="list grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-[30px] gap-[20px] md:mt-10 mt-6" id="recommended-product-con" data-aos="fade-up" data-aos-delay="200">
+            <!-- Product items will be loaded dynamically -->
+        </div>
+    </div>
+</div>
+
+<!-- Services Section -->
+<div class="services md:mt-[60px] mt-10" data-aos="fade-up">
+    <div class="container">
+        <div class="heading flex items-center justify-center gap-5 flex-wrap mb-10">
+            <div class="heading3">Services</div>
+        </div>
+        <div class="benefit-block md:py-[60px] py-10 border-b border-line">
+            <div class="list-benefit grid items-start lg:grid-cols-4 grid-cols-2 gap-[30px]">
+                <div class="benefit-item flex flex-col justify-center items-center text-center hover:transform hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <i class="icon-phone-call lg:text-7xl text-5xl text-[#263587]"></i>
+                    <div class="heading6 mt-5">24/7 Customer Service</div>
+                    <div class="caption1 text-secondary mt-3">We're here to help you with any questions or concerns you have, 24/7.</div>
+                </div>
+                <div class="benefit-item flex flex-col justify-center items-center text-center hover:transform hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <i class="icon-return lg:text-7xl text-5xl text-[#263587]"></i>
+                    <div class="heading6 mt-5">14-Day Money Back</div>
+                    <div class="caption1 text-secondary mt-3">If you're not satisfied with your purchase, simply return it within 14 days for a refund.</div>
+                </div>
+                <div class="benefit-item flex flex-col justify-center items-center text-center hover:transform hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <i class="icon-guarantee lg:text-7xl text-5xl text-[#263587]"></i>
+                    <div class="heading6 mt-5">Our Guarantee</div>
+                    <div class="caption1 text-secondary mt-3">We stand behind our products and services and guarantee your satisfaction.</div>
+                </div>
+                <div class="benefit-item flex flex-col justify-center items-center text-center hover:transform hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+                    <i class="icon-delivery-truck lg:text-7xl text-5xl text-[#263587]"></i>
+                    <div class="heading6 mt-5">Shipping worldwide</div>
+                    <div class="caption1 text-secondary mt-3">We ship our products worldwide, making them accessible to customers everywhere.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script src="/assets/js/swiper-bundle.min.js"></script>
+<script src="/js/index.js"></script>
