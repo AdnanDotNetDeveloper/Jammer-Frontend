@@ -1,8 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    Layout = "_LayoutIndex";
+    Layout = "_Layout";
 }
-<link href="/assets/css/swiper-bundle.min.css" rel="stylesheet" />
 <style>
     .product-item:hover .list-action {
         opacity: 1;
@@ -36,219 +35,73 @@
         animation: fadeIn 0.5s ease-in-out;
     }
     
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
 </style>
 
-<!-- <div id="top-nav" class="top-nav bg-[#263587] md:h-[44px] h-[30px] border-b border-surface1">
-    <div class="container mx-auto h-full">
-        <div class="top-nav-main flex justify-between max-md:justify-center h-full">
-            <div class="left-content flex items-center gap-5 max-md:hidden">
-                <div class="choose-type choose-language flex items-center gap-1.5">
-                    <div class="select relative">
-                        <p class="selected caption2 text-white">English</p>
-                        <ul class="list-option bg-white">
-                            <li data-item="English" class="caption2 active">English</li>
-                            <li data-item="Espana" class="caption2">Espana</li>
-                            <li data-item="France" class="caption2">France</li>
-                        </ul>
-                    </div>
-                    <i class="ph ph-caret-down text-xs text-white"></i>
-                </div>
-                <div class="choose-type choose-currency flex items-center gap-1.5">
-                    <div class="select relative">
-                        <p class="selected caption2 text-white">USD</p>
-                        <ul class="list-option bg-white">
-                            <li data-item="USD" class="caption2 active">USD</li>
-                            <li data-item="EUR" class="caption2">EUR</li>
-                            <li data-item="GBP" class="caption2">GBP</li>
-                        </ul>
-                    </div>
-                    <i class="ph ph-caret-down text-xs text-white"></i>
+<!-- Hero Section with Categories Sidebar and Slider -->
+<div class="hero-section relative pt-8">
+    <div class="container mx-auto">
+        <div class="grid grid-cols-12 gap-6">
+            <!-- Categories Sidebar -->
+            <div class="col-span-12 lg:col-span-3">
+                <div class="category-sidebar bg-white rounded-lg shadow-sm border border-secondary-100">
+                    <h3 class="text-lg font-bold px-4 py-3 border-b border-secondary-100">Categories</h3>
+                    <ul class="category-menu p-2" id="category-menu">
+                        <!-- Categories will be dynamically loaded from API -->
+                        <li class="loading-indicator py-2 px-3 text-secondary-500">
+                            <div class="flex items-center gap-2">
+                                <div class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-primary"></div>
+                                <span>Loading categories...</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div class="text-center text-button-uppercase text-white flex items-center">New customers save 10% with code GET10</div>
-            <div class="right-content flex items-center gap-5 max-md:hidden">
-                <a href="https://www.facebook.com/" target="_blank">
-                    <i class="icon-facebook text-white"></i>
-                </a>
-                <a href="https://www.instagram.com/" target="_blank">
-                    <i class="icon-instagram text-white"></i>
-                </a>
-                <a href="https://www.youtube.com/" target="_blank">
-                    <i class="icon-youtube text-white"></i>
-                </a>
-                <a href="https://twitter.com/" target="_blank">
-                    <i class="icon-twitter text-white"></i>
-                </a>
-                <a href="https://pinterest.com/" target="_blank">
-                    <i class="icon-pinterest text-white"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<div id="header" class="relative w-full style-marketplace">
-    <div class="header-menu style-marketplace relative bg-[#263587] w-full md:h-[74px] h-[56px]" data-aos="fade-down">
-        <div class="container mx-auto h-full">
-            <div class="header-main flex items-center justify-between h-full">
-                <div class="menu-mobile-icon lg:hidden flex items-center">
-                    <i class="icon-category text-white text-2xl"></i>
-                </div>
-                <a href="/" class="flex items-center" data-aos="fade-right" data-aos-delay="100">
-                    <h4 class="heading4 text-white">Jammer</h4>
-                </a>
-                <div class="relative w-2/3 pl-8 flex items-center h-[44px] max-lg:hidden" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-full flex items-center h-full">
-                        <input type="text" id="search-input" class="h-full px-4 w-full border border-line rounded-l" placeholder="What are you looking for today?" />
-                        <button id="search-button" class="button-main bg-red text-white h-full flex items-center px-7 rounded-none rounded-r">Search</button>
-                    </div>
-
-                    <!-- Popup container for search results -->
-                    <div id="search-popup" style="top:45px" class="search-popup hidden absolute bg-white border border-gray-300 p-4 rounded shadow-lg w-full max-w-md z-50">
-                        <!-- Search results will be appended here dynamically -->
-                    </div>
-                </div>
-                <div class="right flex gap-12" data-aos="fade-left" data-aos-delay="300">
-                    <div class="flex items-center gap-4">
-                        <div id="user-icon" class="user-icon flex items-center justify-center cursor-pointer">
-                            <i class="ph-bold ph-user text-white text-2xl"></i>
-                            <div class="login-popup absolute top-[74px] w-[320px] p-7 rounded-xl bg-white shadow-lg z-50">
-                                <a href="/Home/Login" class="button-main w-full text-center">Login</a>
-                                <div class="text-secondary text-center mt-3 pb-4">
-                                    Don't have an account?
-                                    <a href="/Home/signup" class="text-black pl-1 hover:underline">Register </a>
+            
+            <!-- Main Slider -->
+            <div class="col-span-12 lg:col-span-9">
+                <div class="slider-block style-marketplace h-[400px] w-full" data-aos="fade-up">
+                    <div class="swiper h-full relative rounded-2xl overflow-hidden shadow-lg">
+                        <div class="swiper-wrapper h-full w-full flex items-center bg-surface relative">
+                            <!-- Slides will be loaded dynamically -->
+                            <div class="swiper-slide">
+                                <div class="slide-content relative h-[400px] w-full bg-primary-900 rounded-2xl overflow-hidden">
+                                    <div class="absolute inset-0 flex items-center">
+                                        <div class="container mx-auto px-8 lg:px-16">
+                                            <div class="max-w-lg">
+                                                <h2 class="text-4xl font-bold text-white mb-4">New Season Arrivals</h2>
+                                                <p class="text-white text-lg mb-6">Check out the latest tech gadgets with exclusive offers</p>
+                                                <a href="#" class="bg-white text-primary-900 px-6 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-colors inline-block">Shop Now</a>
+                                            </div>
+                                        </div>
+                                        <img src="/assets/images/banner/hero-1.png" alt="Hero Banner" class="absolute right-0 top-0 h-full object-contain object-right max-w-[50%]" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="swiper-slide">
+                                <div class="slide-content relative h-[400px] w-full bg-[#8684D4] rounded-2xl overflow-hidden">
+                                    <div class="absolute inset-0 flex items-center">
+                                        <div class="container mx-auto px-8 lg:px-16">
+                                            <div class="max-w-lg">
+                                                <h2 class="text-4xl font-bold text-white mb-4">Summer Sale</h2>
+                                                <p class="text-white text-lg mb-6">Up to 50% off on selected items</p>
+                                                <a href="#" class="bg-white text-primary-900 px-6 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-colors inline-block">View Deals</a>
+                                            </div>
+                                        </div>
+                                        <img src="/assets/images/banner/hero-2.png" alt="Hero Banner" class="absolute right-0 top-0 h-full object-contain object-right max-w-[50%]" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div id="account-icons" class="flex items-center justify-center cursor-pointer gap-4">
-                            <div class="max-md:hidden wishlist-icon flex items-center relative cursor-pointer">
-                                <a href="/Home/Account">
-                                    <i class="ph-bold ph-user text-white text-2xl transition-transform hover:scale-110" style="color:white"></i>
-                                </a>
-                            </div>
-                            <div class="max-md:hidden wishlist-icon flex items-center relative cursor-pointer">
-                                <a href="/Home/Wishlist">
-                                    <i id="to-wishlist" class="ph-bold ph-heart text-white text-2xl transition-transform hover:scale-110" style="color:white"></i>
-                                </a>
-                            </div>
-                            <div class="max-md:hidden cart-icon flex items-center relative cursor-pointer">
-                                <a href="/Home/Cart">
-                                    <i id="to-cart" class="ph-bold ph-handbag text-white text-2xl transition-transform hover:scale-110" style="color:white"></i>
-                                </a>
-                            </div>
-                        </div>
+                        <div class="swiper-pagination"></div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="top-nav-menu relative bg-white border-b border-line h-[44px] max-lg:hidden z-10" data-aos="fade-down" data-aos-delay="100">
-        <div class="container h-full">
-            <div class="top-nav-menu-main flex items-center justify-between h-full">
-                <div class="left flex items-center h-full">
-                   <div class="menu-department-block relative h-full">
-                        <div class="menu-department-btn relative flex items-center sm:gap-24 gap-4 h-full w-fit cursor-pointer">
-                            <div class="flex items-center gap-3">
-                                <i class="ph ph-list text-xl max-sm:text-base"></i>
-                                <div class="text-button whitespace-nowrap">Department</div>
-                            </div>
-                            <i class="ph ph-caret-down text-xl max-sm:text-base"></i>
-                        </div>
-                       <div class="sub-menu-department style-marketplace absolute top-[84px] left-0 right-0 px-[26px] py-[5px] bg-surface rounded-xl border border-line open shadow-lg">
-                            <!-- Categories will be dynamically loaded here -->
-                        </div>
-                    </div>
-                  <div class="menu-main style-eight h-full pl-12 max-lg:hidden">
-                        <ul class="flex items-center gap-8 h-full">
-                            <li class="h-full">
-                                <a href="/" class="text-button-uppercase duration-300 h-full flex items-center justify-center hover:text-[#263587]"> Home </a>
-                            </li>
-                            <li class="h-full">
-                                <a href="/Home/About" class="text-button-uppercase duration-300 h-full flex items-center justify-center hover:text-[#263587]"> About </a>
-                            </li>
-                            <li class="h-full">
-                                <a href="/Home/Contact" class="text-button-uppercase duration-300 h-full flex items-center justify-center hover:text-[#263587]"> Contact </a>
-                            </li>
-                            <li class="h-full relative">
-                                <a href="/Home/Blog" class="text-button-uppercase duration-300 h-full flex items-center justify-center hover:text-[#263587]"> Blog </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="right flex items-center gap-1">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Menu Mobile -->
-    <div id="menu-mobile" class="">
-        <div class="menu-container bg-white h-full shadow-lg">
-            <div class="container h-full">
-                <div class="menu-main h-full overflow-hidden">
-                    <div class="heading py-2 relative flex items-center justify-center">
-                        <div class="close-menu-mobile-btn absolute left-0 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-surface flex items-center justify-center">
-                            <i class="ph ph-x text-sm"></i>
-                        </div>
-                        <a href="/" class="logo text-3xl font-semibold text-center">Jammer</a>
-                    </div>
-                    <div class="relative mt-2">
-                        <i class="ph ph-magnifying-glass text-xl absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer"></i>
-                        <input type="text" id="search-input-mobile" placeholder="What are you looking for?" class="h-12 rounded-lg border border-line text-sm w-full pl-10 pr-14" />
-                        <button id="search-button-mobile" class="button-main bg-red text-white h-10 flex items-center px-4 rounded-lg absolute right-1 top-1">Search</button>
-
-                        <!-- Popup container for search results -->
-                        <div id="search-popup-mobile" style="top:45px" class="search-popup hidden absolute bg-white border border-gray-300 p-4 rounded shadow-lg w-full max-w-md z-50">
-                            <!-- Search results will be appended here dynamically -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Menu bar -->
-    <div class="menu_bar fixed bg-white bottom-0 left-0 w-full h-[70px] sm:hidden z-[101] shadow-lg">
-        <div class="menu_bar-inner grid grid-cols-4 items-center h-full">
-            <a href="/" class="menu_bar-link flex flex-col items-center gap-1">
-                <span class="ph-bold ph-house text-2xl block transition-transform hover:scale-110"></span>
-                <span class="menu_bar-title caption2 font-semibold">Home</span>
-            </a>
-            <a href="/" class="menu_bar-link flex flex-col items-center gap-1">
-                <span class="ph-bold ph-list text-2xl block transition-transform hover:scale-110"></span>
-                <span class="menu_bar-title caption2 font-semibold">Menu</span>
-            </a>
-            <a href="/Home/Search" class="menu_bar-link flex flex-col items-center gap-1">
-                <span class="ph-bold ph-magnifying-glass text-2xl block transition-transform hover:scale-110"></span>
-                <span class="menu_bar-title caption2 font-semibold">Search</span>
-            </a>
-            <a href="/Home/Cart" class="menu_bar-link flex flex-col items-center gap-1">
-                <span class="ph-bold ph-handbag text-2xl block transition-transform hover:scale-110"></span>
-                <span class="menu_bar-title caption2 font-semibold">Cart</span>
-            </a>
-        </div>
-    </div>
-
-    <!-- Slider -->
-    <div class="slider-block style-marketplace lg:h-[500px] md:h-[400px] sm:h-[320px] h-[280px] w-full" data-aos="fade-up" data-aos-delay="400">
-        <div class="container pt-10 flex justify-end h-full w-full">
-            <div class="slider-main lg:pl-5 h-full w-full">
-                <div class="swiper h-full relative rounded-2xl overflow-hidden shadow-lg">
-                    <div class="swiper-wrapper h-full w-full flex items-center bg-surface relative">
-                        <!-- Slides will be loaded dynamically -->
-                    </div>
-                    <div class="swiper-pagination"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Featured Categories Banner -->
 <div class="banner-block md:pt-10 pt-8" data-aos="fade-up">
     <div class="container">
         <div class="list-banner grid lg:grid-cols-3 sm:grid-cols-2 lg:gap-[30px] gap-[20px]">
@@ -500,3 +353,97 @@
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
 <script src="/assets/js/swiper-bundle.min.js"></script>
 <script src="/js/index.js"></script>
+
+<script>
+    // Initialize Swiper for the hero slider
+    document.addEventListener('DOMContentLoaded', function() {
+        new Swiper('.slider-block .swiper', {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+        
+        // Add custom category display function to connect with index.js
+        window.displayCategoriesInSidebar = function(categories) {
+            const categoryMenu = document.getElementById('category-menu');
+            if (!categoryMenu) return;
+            
+            // Clear loading indicator
+            categoryMenu.innerHTML = '';
+            
+            // Limit to top 10 categories for the sidebar
+            const limitedCategories = categories.slice(0, 10);
+            
+            // Add categories to the menu
+            limitedCategories.forEach((category, index) => {
+                const li = document.createElement('li');
+                li.className = 'py-2 px-3 hover:bg-primary-50 rounded-md transition-colors';
+                
+                const a = document.createElement('a');
+                a.href = `/Home/Category?categoryId=${category.id}`;
+                a.className = 'flex items-center text-secondary-700 hover:text-primary';
+                
+                // Set icon based on category
+                const iconClasses = [
+                    'bi-phone', 'bi-laptop', 'bi-tablet', 'bi-smartwatch', 
+                    'bi-headphones', 'bi-camera', 'bi-tv', 'bi-controller', 
+                    'bi-keyboard', 'bi-pc-display'
+                ];
+                
+                const i = document.createElement('i');
+                i.className = `bi ${iconClasses[index % iconClasses.length]} me-2`;
+                
+                const span = document.createElement('span');
+                span.textContent = category.name;
+                
+                a.appendChild(i);
+                a.appendChild(span);
+                li.appendChild(a);
+                categoryMenu.appendChild(li);
+                
+                // Add AOS animation if available
+                if (typeof AOS !== 'undefined') {
+                    li.setAttribute('data-aos', 'fade-right');
+                    li.setAttribute('data-aos-delay', (50 * index).toString());
+                    li.setAttribute('data-aos-duration', '500');
+                }
+            });
+            
+            // Refresh AOS animations if necessary
+            if (typeof AOS !== 'undefined') {
+                setTimeout(() => AOS.refresh(), 100);
+            }
+        };
+        
+        // Additional hook to connect with categories API
+        const originalFetchCategories = window.fetchCategories;
+        window.fetchCategories = async function() {
+            try {
+                const response = await ApiService.getCategories();
+                const categories = response.data;
+                
+                if (categories && categories.length > 0) {
+                    // Call the original function first
+                    if (typeof originalFetchCategories === 'function') {
+                        originalFetchCategories(categories);
+                    }
+                    
+                    // Also display categories in our sidebar
+                    displayCategoriesInSidebar(categories);
+                }
+                return categories;
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+                return [];
+            }
+        };
+    });
+</script>

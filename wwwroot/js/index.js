@@ -448,8 +448,10 @@ const loadAllProducts = async () => {
  */
 async function fetchProducts() {
     // Initial loading indicator
-    document.querySelector('#recommended-product-con')?.innerHTML = '<div class="flex justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
-    document.querySelector('#list')?.innerHTML = '<div class="flex justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
+    let recommendedContainer = document.querySelector('#recommended-product-con')
+    recommendedContainer.innerHTML = '<div class="flex justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
+    let listContainer = document.querySelector('#list')
+    listContainer.innerHTML = '<div class="flex justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
     
     try {
         // Fetch categories
@@ -491,7 +493,7 @@ async function fetchProducts() {
 function createProductCard(product, index = 0, variant = 'standard') {
     const productLink = document.createElement('a');
     productLink.href = `/Home/Product?productUrl=${product.productURL}`;
-    productLink.className = 'block'; 
+    productLink.className = 'block w-full h-full'; 
     
     // Add AOS animation with cascade effect
     if (typeof AOS !== 'undefined') {
@@ -502,17 +504,16 @@ function createProductCard(product, index = 0, variant = 'standard') {
     }
 
     const productCard = document.createElement('div');
-    productCard.className = `product-item ${variant === 'list' ? 'style-marketplace-list flex items-center gap-4' : 'style-marketplace'} p-4 border border-line rounded-2xl flex ${variant === 'list' ? 'flex-row' : 'flex-col'} justify-between relative hover:shadow-lg transition-all duration-300 hover:transform hover:-translate-y-1`;
+    productCard.className = `product-item bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full transition-all duration-300 hover:shadow-xl`;
 
     // Create the image container
     const bgImgDiv = document.createElement('div');
-    bgImgDiv.className = `bg-img relative ${variant === 'list' ? 'lg:w-[150px] w-[120px] flex-shrink-0' : 'w-full'} aspect-1/1 flex justify-center overflow-hidden rounded-lg`;
+    bgImgDiv.className = `relative flex justify-center items-center overflow-hidden ${variant === 'list' ? 'w-full h-[150px]' : 'w-full h-[180px]'}`;
 
     const productImg = document.createElement('img');
-    productImg.className = "object-cover rounded transition-transform duration-500 hover:scale-110";
+    productImg.className = "object-contain w-[70%] h-[70%] transition-transform duration-500 hover:scale-110";
     productImg.src = `https://jammerapi.mahmadamin.com${product.imagePaths ? product.imagePaths[0] : product.imagePath[0]}`;
     productImg.alt = product.productName || product.name;
-    productImg.style.height = variant === 'list' ? "150px" : "200px";
     
     bgImgDiv.appendChild(productImg);
 
@@ -533,50 +534,55 @@ function createProductCard(product, index = 0, variant = 'standard') {
 
     // Create product info
     const productInfoDiv = document.createElement('div');
-    productInfoDiv.className = `product-infor mt-4 flex flex-col justify-between ${variant === 'list' ? 'flex-grow' : 'flex-grow'}`;
+    productInfoDiv.className = `p-4 flex flex-col items-center text-center flex-grow`;
 
     const titleSpan = document.createElement('span');
-    titleSpan.className = 'text-title font-medium line-clamp-2 hover:text-[#263587] transition-colors';
+    titleSpan.className = 'text-lg font-bold text-gray-800 mb-1 line-clamp-1';
     titleSpan.textContent = product.productName || product.name;
 
+    // Add a short description (Lorem ipsum or actual description if available)
+    const descriptionSpan = document.createElement('span');
+    descriptionSpan.className = 'text-xs text-gray-500 mb-2 line-clamp-2';
+    descriptionSpan.textContent = product.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+
+    const priceSpan = document.createElement('span');
+    priceSpan.className = 'text-lg font-bold text-gray-800 mb-2';
+    priceSpan.textContent = `PKR ${(product.price || 0).toFixed(2)}`;
+
     const starDiv = document.createElement('div');
-    starDiv.className = 'flex gap-0.5 mt-1';
+    starDiv.className = 'flex gap-0.5 justify-center mb-3';
     
     // Show actual rating if available, otherwise use 5 stars
-    const rating = product.rating || 5;
+    const rating = product.rating || 4;
     for (let i = 0; i < 5; i++) {
         const starIcon = document.createElement('i');
         if (i < rating) {
-            starIcon.className = 'ph-fill ph-star text-sm text-yellow';
+            starIcon.className = 'ph-fill ph-star text-lg text-amber-400';
         } else {
-            starIcon.className = 'ph ph-star text-sm text-yellow';
+            starIcon.className = 'ph ph-star text-lg text-amber-400';
         }
         starDiv.appendChild(starIcon);
     }
 
-    const priceSpan = document.createElement('span');
-    priceSpan.className = 'text-title inline-block mt-1 font-semibold text-[#263587]';
-    priceSpan.textContent = `PKR ${(product.price || 0).toFixed(2)}`;
-
-    const discountPriceElement = document.createElement('del');
-    discountPriceElement.classList.add('caption2', 'text-secondary', 'ml-2');
+    // Add Buy Now button with different colors based on index
+    const buyButton = document.createElement('button');
+    // Array of color classes for buttons
+    const buttonColors = [
+        'bg-teal-500 hover:bg-teal-600',  // Teal (similar to the shoe card)
+        'bg-indigo-600 hover:bg-indigo-700', // Indigo (similar to earphone card)
+        'bg-gray-800 hover:bg-gray-900',  // Dark (similar to watch card)
+        'bg-orange-400 hover:bg-orange-500' // Orange (similar to mobile card)
+    ];
     
-    if (product.discountedPrice && product.discountedPrice > product.price) {
-        discountPriceElement.textContent = `PKR ${product.discountedPrice}`;
-    }
-
-    productInfoDiv.appendChild(titleSpan);
-    productInfoDiv.appendChild(starDiv);
+    const colorIndex = index % buttonColors.length;
+    buyButton.className = `${buttonColors[colorIndex]} text-white py-2 px-4 rounded-md w-full font-medium mt-auto transition-colors duration-300`;
+    buyButton.textContent = 'Buy Now';
     
-    const priceWrapper = document.createElement('div');
-    priceWrapper.className = 'flex items-center mt-2';
-    priceWrapper.appendChild(priceSpan);
-    
-    if (product.discountedPrice && product.discountedPrice > product.price) {
-        priceWrapper.appendChild(discountPriceElement);
-    }
-    
-    productInfoDiv.appendChild(priceWrapper);
+    buyButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        addToCart(product.productId || product.id, 1, product.couponId || 0);
+    });
 
     // Add sale badge if it's on sale
     if (product.discountedPrice && product.price < product.discountedPrice) {
@@ -587,6 +593,12 @@ function createProductCard(product, index = 0, variant = 'standard') {
     }
 
     // Assemble the product card
+    productInfoDiv.appendChild(titleSpan);
+    productInfoDiv.appendChild(descriptionSpan);
+    productInfoDiv.appendChild(priceSpan);
+    productInfoDiv.appendChild(starDiv);
+    productInfoDiv.appendChild(buyButton);
+
     productCard.appendChild(bgImgDiv);
     productCard.appendChild(productInfoDiv);
     productLink.appendChild(productCard);
@@ -801,6 +813,61 @@ async function fetchCategories() {
         displayCategoryCollections(categories);
         initializeCategoryButtons(categories);
         displayPromotionalBanners(categories);
+        
+        // Populate the sidebar category menu if it exists
+        const categoryMenu = document.getElementById('category-menu');
+        if (categoryMenu) {
+            // Clear loading indicator
+            categoryMenu.innerHTML = '';
+            
+            // Limit to top 10 categories for the sidebar
+            const limitedCategories = categories.slice(0, 10);
+            
+            // Add categories to the menu
+            limitedCategories.forEach((category, index) => {
+                const li = document.createElement('li');
+                li.className = 'py-2 px-3 hover:bg-primary-50 rounded-md transition-colors';
+                
+                const a = document.createElement('a');
+                a.href = `/Home/Category?categoryId=${category.id}`;
+                a.className = 'flex items-center text-secondary-700 hover:text-primary';
+                
+                // Set icon based on category
+                const iconClasses = [
+                    'bi-phone', 'bi-laptop', 'bi-tablet', 'bi-smartwatch', 
+                    'bi-headphones', 'bi-camera', 'bi-tv', 'bi-controller', 
+                    'bi-keyboard', 'bi-pc-display'
+                ];
+                
+                const i = document.createElement('i');
+                i.className = `bi ${iconClasses[index % iconClasses.length]} me-2`;
+                
+                const span = document.createElement('span');
+                span.textContent = category.name;
+                
+                a.appendChild(i);
+                a.appendChild(span);
+                li.appendChild(a);
+                categoryMenu.appendChild(li);
+                
+                // Add AOS animation if available
+                if (typeof AOS !== 'undefined') {
+                    li.setAttribute('data-aos', 'fade-right');
+                    li.setAttribute('data-aos-delay', (50 * index).toString());
+                    li.setAttribute('data-aos-duration', '500');
+                }
+            });
+            
+            // Refresh AOS animations if necessary
+            if (typeof AOS !== 'undefined') {
+                setTimeout(() => AOS.refresh(), 100);
+            }
+        }
+        
+        // If a custom display function is defined in the page, call it
+        if (typeof window.displayCategoriesInSidebar === 'function') {
+            window.displayCategoriesInSidebar(categories);
+        }
         
         // Initialize category browsing
         if (document.getElementById('list-product')) {
@@ -1080,7 +1147,7 @@ async function fetchProductsByParentId(parentId) {
         }
         
         // Show loading indicator
-        productContainer.innerHTML = '<div class="col-span-full flex justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
+        productContainer.innerHTML = '<div class="flex justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
         
         // Fetch products by category
         try {
@@ -1090,13 +1157,16 @@ async function fetchProductsByParentId(parentId) {
             productContainer.innerHTML = '';
             
             if (response && response.data && response.data.length > 0) {
-                // Create a grid for products
-                const gridContainer = document.createElement('div');
-                gridContainer.className = 'grid xl:grid-cols-3 md:grid-cols-2 gap-6 w-full';
-                productContainer.appendChild(gridContainer);
+                // Create a flex container for products
+                const flexContainer = document.createElement('div');
+                flexContainer.className = 'flex col flex-wrap gap-6 w-full';
+                productContainer.appendChild(flexContainer);
                 
                 // Display each product
                 response.data.forEach((product, index) => {
+                    const productWrapper = document.createElement('div');
+                    productWrapper.className = 'w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]';
+                    
                     const productCard = createProductCard(product, index);
                     
                     // Add scroll trigger animation
@@ -1106,12 +1176,13 @@ async function fetchProductsByParentId(parentId) {
                         productCard.setAttribute('data-aos-duration', '600');
                     }
                     
-                    gridContainer.appendChild(productCard);
+                    productWrapper.appendChild(productCard);
+                    flexContainer.appendChild(productWrapper);
                 });
                 
                 // Add "View All" button
                 const viewAllContainer = document.createElement('div');
-                viewAllContainer.className = 'col-span-full flex justify-center mt-8';
+                viewAllContainer.className = 'w-full flex justify-center mt-8';
                 
                 const viewAllButton = document.createElement('a');
                 viewAllButton.href = `/Home/Category?id=${parentId}`;
@@ -1157,7 +1228,7 @@ async function fetchTopRatedProducts(existingProducts = []) {
         }
         
         // Show loading indicator
-        productContainer.innerHTML = '<div class="col-span-full flex justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
+        productContainer.innerHTML = '<div class="flex flex-col justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
         
         // Use existing products if provided, otherwise fetch from API
         let products = existingProducts;
@@ -1170,7 +1241,7 @@ async function fetchTopRatedProducts(existingProducts = []) {
                 }
             } catch (error) {
                 console.error("Error fetching top rated products:", error);
-                productContainer.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500">Error loading products</div>';
+                productContainer.innerHTML = '<div class="text-center py-10 text-gray-500">Error loading products</div>';
                 return;
             }
         }
@@ -1179,14 +1250,14 @@ async function fetchTopRatedProducts(existingProducts = []) {
         productContainer.innerHTML = '';
         
         if (!products || products.length === 0) {
-            productContainer.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500">No products found</div>';
+            productContainer.innerHTML = '<div class="text-center py-10 text-gray-500">No products found</div>';
             return;
         }
         
-        // Create a responsive grid container
-        const gridContainer = document.createElement('div');
-        gridContainer.className = 'grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-4 sm:gap-5 md:gap-6';
-        productContainer.appendChild(gridContainer);
+        // Create a responsive flex container
+        const flexContainer = document.createElement('div');
+        flexContainer.className = 'flex flex-wrap gap-4 sm:gap-5 md:gap-6';
+        productContainer.appendChild(flexContainer);
         
         // Limit to 6 products for top rated section
         const limitedProducts = products.slice(0, 6);
@@ -1194,7 +1265,7 @@ async function fetchTopRatedProducts(existingProducts = []) {
         // Display each product in a list format
         limitedProducts.forEach((product, index) => {
             const productItem = document.createElement('div');
-            productItem.className = 'col-span-1 transition-all duration-300 hover:transform hover:-translate-y-1';
+            productItem.className = 'w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] transition-all duration-300 hover:transform hover:-translate-y-1';
             
             if (typeof AOS !== 'undefined') {
                 productItem.setAttribute('data-aos', 'fade-up');
@@ -1205,12 +1276,12 @@ async function fetchTopRatedProducts(existingProducts = []) {
             // Use the reusable product card function with 'list' variant
             const productCard = createProductCard(product, index, 'list');
             productItem.appendChild(productCard);
-            gridContainer.appendChild(productItem);
+            flexContainer.appendChild(productItem);
         });
         
         // Add "View More" button at the bottom
         const viewMoreContainer = document.createElement('div');
-        viewMoreContainer.className = 'col-span-full flex justify-center mt-8';
+        viewMoreContainer.className = 'w-full flex justify-center mt-8';
         
         const viewMoreButton = document.createElement('a');
         viewMoreButton.href = '/Home/Shop';
@@ -1245,7 +1316,7 @@ async function fetchRecommendedProducts(existingProducts = []) {
         }
         
         // Show loading indicator
-        productContainer.innerHTML = '<div class="col-span-full flex justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
+        productContainer.innerHTML = '<div class="flex justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
         
         // Use existing products if provided, otherwise fetch from API
         let products = existingProducts;
@@ -1258,7 +1329,7 @@ async function fetchRecommendedProducts(existingProducts = []) {
                 }
             } catch (error) {
                 console.error("Error fetching recommended products:", error);
-                productContainer.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500">Error loading products</div>';
+                productContainer.innerHTML = '<div class="text-center py-10 text-gray-500">Error loading products</div>';
                 return;
             }
         }
@@ -1267,25 +1338,25 @@ async function fetchRecommendedProducts(existingProducts = []) {
         productContainer.innerHTML = '';
         
         if (!products || products.length === 0) {
-            productContainer.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500">No products found</div>';
+            productContainer.innerHTML = '<div class="text-center py-10 text-gray-500">No products found</div>';
             return;
         }
         
         // Shuffle the array to get different products each time
         const shuffledProducts = [...products].sort(() => 0.5 - Math.random());
         
-        // Limit to 10 products for recommendations (2 rows of 5 on large screens)
+        // Limit to 10 products for recommendations
         const limitedProducts = shuffledProducts.slice(0, 10);
         
-        // Create a responsive grid container
-        const gridContainer = document.createElement('div');
-        gridContainer.className = 'grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 sm:gap-5 md:gap-6';
-        productContainer.appendChild(gridContainer);
+        // Create a responsive flex container
+        const flexContainer = document.createElement('div');
+        flexContainer.className = 'flex flex-wrap gap-4 sm:gap-5 md:gap-6';
+        productContainer.appendChild(flexContainer);
         
         // Display each product in a card format
         limitedProducts.forEach((product, index) => {
             const productItem = document.createElement('div');
-            productItem.className = 'col-span-1 transition-all duration-300 hover:transform hover:-translate-y-1';
+            productItem.className = 'w-[calc(50%-8px)] sm:w-[calc(33.333%-13.4px)] md:w-[calc(25%-18px)] lg:w-[calc(20%-19.2px)] transition-all duration-300 hover:transform hover:-translate-y-1';
             
             if (typeof AOS !== 'undefined') {
                 productItem.setAttribute('data-aos', 'fade-up');
@@ -1297,12 +1368,12 @@ async function fetchRecommendedProducts(existingProducts = []) {
             // Use the reusable product card function with 'standard' variant
             const productCard = createProductCard(product, index, 'standard');
             productItem.appendChild(productCard);
-            gridContainer.appendChild(productItem);
+            flexContainer.appendChild(productItem);
         });
         
         // Add "View More" button at the bottom
         const viewMoreContainer = document.createElement('div');
-        viewMoreContainer.className = 'col-span-full flex justify-center mt-8';
+        viewMoreContainer.className = 'w-full flex justify-center mt-8';
         
         const viewMoreButton = document.createElement('a');
         viewMoreButton.href = '/Home/Shop';
@@ -1337,31 +1408,32 @@ function loadDealsOfTheWeek(products) {
         }
         
         // Create a dedicated container for deals
-        const dealsGrid = document.createElement('div');
-        dealsGrid.className = 'deals-of-week-container grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-[30px] gap-[20px] md:mt-10 mt-6';
+        const dealsContainer = document.createElement('div');
+        dealsContainer.className = 'deals-of-week-container flex flex-wrap md:gap-[30px] gap-[20px] md:mt-10 mt-6';
         
-        // Clear and append the deals grid
+        // Clear and append the deals container
         productsContainer.innerHTML = '';
-        productsContainer.appendChild(dealsGrid);
+        productsContainer.appendChild(dealsContainer);
         
         // If no products provided, try to fetch top rated products
         if (!products || products.length === 0) {
-            dealsGrid.innerHTML = '<div class="col-span-full flex justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
+            dealsContainer.innerHTML = '<div class="w-full flex justify-center py-10"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#263587]"></div></div>';
             
             // Fetch top rated products
             ApiService.getTopRatedProducts().then(response => {
                 if (response && response.data && response.data.length > 0) {
                     // Clear loading indicator
-                    dealsGrid.innerHTML = '';
+                    dealsContainer.innerHTML = '';
                     
                     // Display the products
-                    displayDealProducts(response.data.slice(0, 5), dealsGrid);
+                    displayDealProducts(response.data.slice(0, 5), dealsContainer);
+                    console.log(response.data.slice(0, 5));
                 } else {
-                    dealsGrid.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500">No deals available</div>';
+                    dealsContainer.innerHTML = '<div class="w-full text-center py-10 text-gray-500">No deals available</div>';
                 }
             }).catch(error => {
                 console.error("Error fetching top rated products for deals:", error);
-                dealsGrid.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500">Error loading deals</div>';
+                dealsContainer.innerHTML = '<div class="w-full text-center py-10 text-gray-500">Error loading deals</div>';
             });
             
             return;
@@ -1371,7 +1443,7 @@ function loadDealsOfTheWeek(products) {
         const dealProducts = products.slice(0, 5);
         
         // Display the products
-        displayDealProducts(dealProducts, dealsGrid);
+        displayDealProducts(dealProducts, dealsContainer);
         
         // Create a countdown timer update function
         initializeCountdownTimer();
@@ -1386,7 +1458,7 @@ function displayDealProducts(products, container) {
     // Display each deal product
     products.forEach((product, index) => {
         const productItem = document.createElement('div');
-        productItem.className = 'col-span-1';
+        productItem.className = 'w-[calc(50%-10px)] sm:w-[calc(33.333%-20px)] md:w-[calc(25%-22.5px)] lg:w-[calc(20%-24px)]';
         
         // Add AOS animation
         if (typeof AOS !== 'undefined') {
@@ -1432,7 +1504,7 @@ function displayDealProducts(products, container) {
     
     // Add "View More Deals" button at the bottom
     const viewMoreContainer = document.createElement('div');
-    viewMoreContainer.className = 'col-span-full flex justify-center mt-8';
+    viewMoreContainer.className = 'w-full flex justify-center mt-8';
     
     const viewMoreButton = document.createElement('a');
     viewMoreButton.href = '/Home/Deals';

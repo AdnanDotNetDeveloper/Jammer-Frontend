@@ -360,8 +360,10 @@ modalWishlistMain?.addEventListener("click", (e) => {
 // Set wishlist length
 const handleItemModalWishlist = () => {
   wishlistStore = localStorage.getItem("wishlistStore");
-
-  if (wishlistStore) {
+  
+  // Add check for wishlistIcon
+  const wishlistIcon = document.querySelector(".wishlist-icon");
+  if (wishlistIcon && wishlistIcon.querySelector("span") && wishlistStore) {
     wishlistIcon.querySelector("span").innerHTML =
       JSON.parse(wishlistStore).length;
   }
@@ -371,9 +373,15 @@ const handleItemModalWishlist = () => {
     ".modal-wishlist-block .list-product"
   );
 
+  // Check if listItemWishlist exists
+  if (!listItemWishlist) {
+    console.log("Wishlist container not found");
+    return;
+  }
+
   listItemWishlist.innerHTML = "";
 
-  if (JSON.parse(wishlistStore).length === 0) {
+  if (!wishlistStore || JSON.parse(wishlistStore).length === 0) {
     listItemWishlist.innerHTML = `<p class='mt-1'>No product in wishlist</p>`;
   } else {
     JSON.parse(wishlistStore).forEach((item) => {
@@ -415,22 +423,27 @@ const handleItemModalWishlist = () => {
     });
   }
 
+  // Add null check before accessing prdItems
   const prdItems = listItemWishlist.querySelectorAll(".item");
-  prdItems.forEach((prd) => {
-    const removeWishlistBtn = prd.querySelector(".remove-wishlist-btn");
-    removeWishlistBtn.addEventListener("click", () => {
-      const prdId = removeWishlistBtn
-        .closest(".item")
-        .getAttribute("data-item");
-      // JSON.parse(wishlistStore)
-      const newArray = JSON.parse(wishlistStore).filter(
-        (item) => item.id !== prdId
-      );
-      localStorage.setItem("wishlistStore", JSON.stringify(newArray));
-      handleItemModalWishlist();
-      updateWishlistIcons();
+  if (prdItems && prdItems.length > 0) {
+    prdItems.forEach((prd) => {
+      const removeWishlistBtn = prd.querySelector(".remove-wishlist-btn");
+      if (removeWishlistBtn) {
+        removeWishlistBtn.addEventListener("click", () => {
+          const prdId = removeWishlistBtn
+            .closest(".item")
+            .getAttribute("data-item");
+          // JSON.parse(wishlistStore)
+          const newArray = JSON.parse(wishlistStore).filter(
+            (item) => item.id !== prdId
+          );
+          localStorage.setItem("wishlistStore", JSON.stringify(newArray));
+          handleItemModalWishlist();
+          updateWishlistIcons();
+        });
+      }
     });
-  });
+  }
 };
 
 const updateWishlistIcons = () => {

@@ -17,6 +17,59 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <body class="bg-surface min-h-screen flex flex-col">
+    @if (ViewData.ContainsKey("HideLayout") && (bool)ViewData["HideLayout"])
+    {
+        <!-- Simple Header for Login/Signup -->
+        <header class="bg-white py-4 shadow-soft">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between">
+                    <!-- Logo -->
+                    <a href="/" class="text-2xl font-bold text-primary">Jammer</a>
+                    
+                    <!-- Navigation Links -->
+                    <nav class="hidden md:flex items-center space-x-6">
+                        <a href="/" class="nav-link py-2">Home</a>
+                        <a href="/Home/About" class="nav-link py-2">About</a>
+                        <a href="/Home/Contact" class="nav-link py-2">Contact</a>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow flex items-center justify-center py-12">
+            <div class="container mx-auto px-4">
+                @RenderBody()
+            </div>
+        </main>
+
+        <!-- Simple Footer -->
+        <footer class="bg-secondary-900 text-white py-6">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <p class="text-secondary-300">&copy; @DateTime.Now.Year Jammer. All rights reserved.</p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-secondary-300 hover:text-white transition-colors">
+                            <i class="bi bi-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-secondary-300 hover:text-white transition-colors">
+                            <i class="bi bi-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-secondary-300 hover:text-white transition-colors">
+                            <i class="bi bi-twitter-x text-xl"></i>
+                        </a>
+                        <a href="#" class="text-secondary-300 hover:text-white transition-colors">
+                            <i class="bi bi-youtube text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    }
+    else
+    {
     <!-- Announcement Bar -->
     <div class="bg-primary-900 text-white py-2 text-center text-sm font-medium">
         <div class="container mx-auto px-4">
@@ -36,6 +89,20 @@
                 <!-- Logo -->
                 <a href="/" class="text-2xl font-bold text-primary">Jammer</a>
 
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden lg:flex items-center w-2/5">
+                    <div class="search-bar w-full flex items-center">
+                        <input type="text" id="search-input" placeholder="What are you looking for today?" class="w-full py-2 px-4 rounded-l-lg" />
+                        <button id="search-button" class="bg-primary text-white py-2 px-4 rounded-r-lg">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                    <!-- Search Popup -->
+                    <div id="search-popup" style="top:45px" class="search-popup hidden absolute bg-white border border-gray-300 p-4 rounded shadow-lg w-full max-w-md z-50">
+                        <!-- Search results will be dynamically populated -->
+                    </div>
+                </div>
+
                 <!-- Desktop Navigation -->
                 <nav class="hidden lg:flex items-center space-x-8">
                     <a href="/" class="nav-link py-2">Home</a>
@@ -46,17 +113,12 @@
 
                 <!-- User Actions -->
                 <div class="flex items-center space-x-5">
-                    <!-- Search -->
-                    <button type="button" id="search-button" class="text-secondary-500 hover:text-primary transition-colors">
-                        <i class="bi bi-search text-xl"></i>
-                    </button>
-
                     <!-- User Account -->
                     <div class="relative" id="account-dropdown">
                         <button type="button" id="main-user-icon" class="text-secondary-500 hover:text-primary transition-colors">
                             <i class="bi bi-person-circle text-xl"></i>
                         </button>
-                        <div id="account-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 rounded-lg bg-white shadow-medium py-2 z-10">
+                        <div id="account-dropdown-menu" class="login-popup absolute right-0 mt-2 w-48 rounded-lg bg-white shadow-medium py-2 z-10 hidden">
                             <a href="/Home/Login" id="login" class="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-50 hover:text-primary">Login</a>
                             <a href="/Home/Signup" id="signup" class="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-50 hover:text-primary">Register</a>
                             <a href="/Home/Account" class="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-50 hover:text-primary">My Account</a>
@@ -82,45 +144,67 @@
     </header>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
-        <div class="bg-white h-full w-64 shadow-hard transform transition-transform duration-300 ease-in-out -translate-x-full">
-            <div class="flex justify-between items-center p-4 border-b border-secondary-100">
-                <span class="text-xl font-bold text-primary">Menu</span>
-                <button id="close-mobile-menu" class="text-secondary-500 hover:text-primary">
+    <div id="menu-mobile" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="menu-container bg-white h-full w-64 shadow-hard transform transition-transform duration-300 ease-in-out -translate-x-full">
+            <div class="heading py-4 relative flex items-center justify-center border-b border-secondary-100">
+                <div class="close-menu-mobile-btn absolute left-4 top-1/2 -translate-y-1/2 text-secondary-500 hover:text-primary">
                     <i class="bi bi-x text-xl"></i>
-                </button>
-            </div>
-            <nav class="p-4">
-                <a href="/" class="block py-2 text-secondary-700 hover:text-primary">Home</a>
-                <a href="/Home/About" class="block py-2 text-secondary-700 hover:text-primary">About</a>
-                <a href="/Home/Contact" class="block py-2 text-secondary-700 hover:text-primary">Contact</a>
-                <a href="/Home/Blog" class="block py-2 text-secondary-700 hover:text-primary">Blog</a>
-                <div class="border-t border-secondary-100 my-2 pt-2">
-                    <a href="/Home/Login" class="block py-2 text-secondary-700 hover:text-primary">Login</a>
-                    <a href="/Home/Signup" class="block py-2 text-secondary-700 hover:text-primary">Register</a>
-                    <a href="/Home/Account" class="block py-2 text-secondary-700 hover:text-primary">My Account</a>
-                    <a href="/Home/Wishlist" class="block py-2 text-secondary-700 hover:text-primary">Wishlist</a>
-                    <a href="/Home/Cart" class="block py-2 text-secondary-700 hover:text-primary">Cart</a>
                 </div>
-            </nav>
+                <a href="/" class="logo text-2xl font-semibold text-primary">Jammer</a>
+            </div>
+            <div class="mt-4 px-4">
+                <div class="relative mb-4">
+                    <i class="bi bi-search text-secondary-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+                    <input type="text" id="search-input-mobile" placeholder="What are you looking for?" class="w-full py-2 pl-10 pr-3 border border-secondary-200 rounded-lg" />
+                    <button id="search-button-mobile" class="button-main bg-primary text-white absolute right-1 top-1 py-1 px-3 rounded-lg text-sm">Search</button>
+                    
+                    <!-- Mobile Search Results -->
+                    <div id="search-popup-mobile" class="search-popup hidden absolute bg-white border border-gray-300 p-4 rounded shadow-lg w-full z-50 mt-1">
+                        <!-- Search results will be dynamically populated -->
+                    </div>
+                </div>
+                <nav>
+                    <a href="/" class="block py-2 text-secondary-700 hover:text-primary">Home</a>
+                    <a href="/Home/About" class="block py-2 text-secondary-700 hover:text-primary">About</a>
+                    <a href="/Home/Contact" class="block py-2 text-secondary-700 hover:text-primary">Contact</a>
+                    <a href="/Home/Blog" class="block py-2 text-secondary-700 hover:text-primary">Blog</a>
+                    <div class="border-t border-secondary-100 my-2 pt-2">
+                        <a href="/Home/Login" class="block py-2 text-secondary-700 hover:text-primary">Login</a>
+                        <a href="/Home/Signup" class="block py-2 text-secondary-700 hover:text-primary">Register</a>
+                        <a href="/Home/Account" class="block py-2 text-secondary-700 hover:text-primary">My Account</a>
+                        <a href="/Home/Wishlist" class="block py-2 text-secondary-700 hover:text-primary">Wishlist</a>
+                        <a href="/Home/Cart" class="block py-2 text-secondary-700 hover:text-primary">Cart</a>
+                    </div>
+                </nav>
+            </div>
         </div>
     </div>
 
-    <!-- Search Modal -->
-    <div id="search-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
-        <div class="bg-white rounded-xl p-6 max-w-2xl w-full mx-4 animate-fade-in">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold">Search</h3>
-                <button id="close-search" class="text-secondary-500 hover:text-primary">
-                    <i class="bi bi-x text-xl"></i>
-                </button>
-            </div>
-            <form action="/Home/Search" method="get">
-                <div class="relative">
-                    <input type="text" name="q" placeholder="What are you looking for?" class="form-control pl-10" autocomplete="off">
-                    <i class="bi bi-search text-secondary-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+    <!-- Department menu dropdown -->
+    <div class="top-nav-menu relative bg-white border-b border-secondary-100 h-[44px] max-lg:hidden z-10">
+        <div class="container mx-auto h-full">
+            <div class="flex items-center justify-between h-full">
+                <div class="flex items-center h-full">
+                    <div class="menu-department-block relative h-full">
+                        <div class="menu-department-btn relative flex items-center sm:gap-8 gap-4 h-full w-fit cursor-pointer">
+                            <div class="flex items-center gap-3">
+                                <i class="bi bi-grid text-lg"></i>
+                                <div class="text-button whitespace-nowrap">Department</div>
+                            </div>
+                            <i class="bi bi-chevron-down text-sm"></i>
+                        </div>
+                        <div class="sub-menu-department absolute top-[44px] left-0 right-0 p-6 bg-white rounded-b-xl border border-secondary-100 hidden shadow-lg">
+                            <!-- Categories will be dynamically loaded here -->
+                        </div>
+                    </div>
                 </div>
-            </form>
+                <div class="flex items-center gap-1 text-secondary-500">
+                    <div class="flex items-center gap-2 text-sm">
+                        <i class="bi bi-telephone"></i>
+                        <span>+923123545701</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -240,6 +324,7 @@
     <div id="loading-overlay" class="fixed inset-0 bg-neutral bg-opacity-80 z-[9999] flex items-center justify-center hidden">
         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary"></div>
     </div>
+    }
 
     <!-- Scripts -->
     <script src="/assets/js/jquery.min.js"></script>
@@ -248,6 +333,7 @@
     <script src="/assets/js/slick.min.js"></script>
     <script src="/assets/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="/js/index.js"></script>
     
     <!-- Animation Library -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -266,17 +352,29 @@
             
             // Mobile menu toggle
             document.getElementById('mobile-menu-button')?.addEventListener('click', function() {
-                document.getElementById('mobile-menu').classList.remove('hidden');
-                document.querySelector('#mobile-menu > div').classList.add('translate-x-0');
-                document.querySelector('#mobile-menu > div').classList.remove('-translate-x-full');
+                const menuMobile = document.getElementById('menu-mobile');
+                if (menuMobile) {
+                    menuMobile.classList.remove('hidden');
+                    menuMobile.querySelector('.menu-container').classList.remove('-translate-x-full');
+                    menuMobile.querySelector('.menu-container').classList.add('translate-x-0');
+                }
             });
             
-            document.getElementById('close-mobile-menu')?.addEventListener('click', function() {
-                document.querySelector('#mobile-menu > div').classList.remove('translate-x-0');
-                document.querySelector('#mobile-menu > div').classList.add('-translate-x-full');
-                setTimeout(function() {
-                    document.getElementById('mobile-menu').classList.add('hidden');
-                }, 300);
+            document.querySelector('.close-menu-mobile-btn')?.addEventListener('click', function() {
+                const menuMobile = document.getElementById('menu-mobile');
+                if (menuMobile) {
+                    const container = menuMobile.querySelector('.menu-container');
+                    container.classList.remove('translate-x-0');
+                    container.classList.add('-translate-x-full');
+                    setTimeout(function() {
+                        menuMobile.classList.add('hidden');
+                    }, 300);
+                }
+            });
+            
+            // Department menu toggle
+            document.querySelector('.menu-department-btn')?.addEventListener('click', function() {
+                document.querySelector('.sub-menu-department').classList.toggle('hidden');
             });
             
             // Account dropdown toggle
@@ -284,22 +382,19 @@
                 document.getElementById('account-dropdown-menu').classList.toggle('hidden');
             });
             
-            // Close dropdown when clicking outside
+            // Close dropdowns when clicking outside
             document.addEventListener('click', function(e) {
+                // Department menu
+                if (!document.querySelector('.menu-department-block')?.contains(e.target)) {
+                    document.querySelector('.sub-menu-department')?.classList.add('hidden');
+                }
+                
+                // Account dropdown
                 if (!document.getElementById('account-dropdown')?.contains(e.target)) {
                     document.getElementById('account-dropdown-menu')?.classList.add('hidden');
                 }
             });
             
-            // Search modal toggle
-            document.getElementById('search-button')?.addEventListener('click', function() {
-                document.getElementById('search-modal').classList.remove('hidden');
-            });
-            
-            document.getElementById('close-search')?.addEventListener('click', function() {
-                document.getElementById('search-modal').classList.add('hidden');
-            });
-
             // Update cart count
             function updateCartCount() {
                 const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
